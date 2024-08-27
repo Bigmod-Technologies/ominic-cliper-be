@@ -1,0 +1,183 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block main %}
+        <!-- ======================banner=============================== -->
+        <section class="max-w-[1510px] mx-auto">
+            <div
+                class="flex flex-col gap-4 lg:flex-row lg:justify-between lg:items-center mt-8 md:mt-16 15i:mt-20 px-4 sm:px-8 md:px-12 xl:px-16 15i:px-20">
+                <!-- left -->
+                <div class="lg:max-w-[450px] 14i:max-w-[548px]">
+                    <div>
+                        <p class="text-[#262149] text-xs md:text-[16px]">
+                            Home - Blog Details
+                        </p>
+                        <p
+                            class="text-[#262149] font-bold text-2xl mm:text-3xl md:text-5xl lg:text-4xl 14i:text-[42px] 14i:leading-[54px]">
+                            Welcome to Dot Clipping, your go-to photo
+                        </p>
+                    </div>
+                    <p class="text-[#262149] text-xs md:text-sm xl:text-[18px] 15i:text-xl mt-4 md:mt-5">
+                        Welcome to Dot Clipping, your go-to photo-editing agency for all your image editing needs. At
+                        Dot
+                        Clipping, we
+                        understand Welcome to Dot Clipping, your go-to photo-editing agency for all your image editing
+                        needs
+                    </p>
+                </div>
+                <!-- right -->
+                <div>
+                    <p class="text-[#012B27] font-bold text-[16px] lg:text-xl 15i:text-[22px] 15i:leading-[28px]">
+                        12 Jan 2023
+                    </p>
+                    <p class="text-[#012B27] font-bold text-[16px] lg:text-xl 15i:text-[22px] 15i:leading-[28px]">
+                        Written By:<span class="text-[#E64E28]">Omnic Clipper</span>
+                    </p>
+                    <div class="flex gap-5 mt-2 lg:mt-5">
+                        <img src="{% static 'assets/Ellipse1.png' %}" alt="img">
+                        <img src="{% static 'assets/Ellipse1.png' %}" alt="img">
+                        <img src="{% static 'assets/Ellipse1.png' %}" alt="img">
+                        <img src="{% static 'assets/Ellipse1.png' %}" alt="img">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ======================blog details========================= -->
+        <section
+            class="px-4 sm:px-8 md:px-16 lg:px-24 xl:px-32 14i:px-48 15i:px-[235px] py-8 sm:py-12 md:py-20 14i:py-[100px] space-y-8 xl:space-y-[54px] max-w-[1510px] mx-auto">
+            <!-- image -->
+            <div class="aspect-w-1 aspect-h-1 rounded-[50px]">
+                <img src="{% static 'assets/Rectangle.png' %}" alt="Image" class="object-cover w-full h-full rounded-[50px]">
+            </div>
+            <!-- description 1 -->
+            <div class="space-y-5">
+                <p class="text-[#001210] font-[500] lg:text-xl 14i:text-[36px] 14i:leading-[46px]">
+                    Title about the Blog Title about the Blog
+                </p>
+                <p class="text-[#001210] text-sm lg:text-[16px] 14i:text-xl">
+                    Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the
+                    industry's standard
+                    dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to
+                    make a type specimen
+                    book. It has survived not only five centuries, but also the leap into electronic typesetting,
+                    remaining essentially
+                    unchanged.Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has
+                    been the industry's
+                    standard dummy text ever since the 1500s, when an unknown printer took a galley of type and
+                    scrambled it to make a type
+                    specimen book. It has survived not only five centuries, but also the leap into electronic
+                    typesetting, remaining
+                    essentially unchanged. Lorem Ipsum is simply dummy text of the printing and typesetting industry.
+                    Lorem Ipsum has been
+                    the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of
+                    type and scrambled it
+                    to make a type specimen book. It has survived not only five centuries, but also the leap into
+                    electronic typesetting,
+                    remaining essentially unchanged.
+                </p>
+            </div>
+            <!-- description 2 -->
+            <div class="space-y-5">
+                <p class="text-[#001210] font-[500] lg:text-xl 14i:text-[36px] 14i:leading-[46px]">
+                    Title about the Blog Title about the Blog
+                </p>
+                <p class="text-[#001210] text-sm lg:text-[16px] 14i:text-xl">
+                    Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the
+                    industry's standard
+                    dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to
+                    make a type specimen
+                    book. It has survived not only five centuries, but also the leap into electronic typesetting,
+                    remaining essentially
+                    unchanged.Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has
+                    been the industry's
+                    standard dummy text ever since the 1500s, when an unknown printer took a galley of type and
+                    scrambled it to make a type
+                    specimen book. It has survived not only five centuries, but also the leap into electronic
+                    typesetting, remaining
+                    essentially unchanged. Lorem Ipsum is simply dummy text of the printing and typesetting industry.
+                    Lorem Ipsum has been
+                    the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of
+                    type and scrambled it
+                    to make a type specimen book. It has survived not only five centuries, but also the leap into
+                    electronic typesetting,
+                    remaining essentially unchanged.
+                </p>
+            </div>
+            <!-- tags -->
+            <div class="space-y-5">
+                <p class="text-[#001210] font-[500] lg:text-xl 14i:text-[36px] 14i:leading-[46px]">
+                    Tags
+                </p>
+                <div
+                    class="p-5 flex flex-wrap gap-x-[5px] gap-y-5 border-[#B3AEDA] border-[1px] rounded-[10px]w-full md:max-w-[593px] rounded-[10px]">
+                    <p
+                        class="text-[#262149] text-[16px] border-[1px] border-[#B3AEDA] rounded-[5px] py-2 px-3 flex-shrink-0">
+                        Neck joint
+                    </p>
+
+                    <p
+                        class="text-[#262149] text-[16px] border-[1px] border-[#B3AEDA] rounded-[5px] py-2 px-3 flex-shrink-0">
+                        Background remove
+                    </p>
+
+                    <p
+                        class="text-[#262149] text-[16px] border-[1px] border-[#B3AEDA] rounded-[5px] py-2 px-3 flex-shrink-0">
+                        Symmetric
+                    </p>
+
+                    <p
+                        class="text-[#262149] text-[16px] border-[1px] border-[#B3AEDA] rounded-[5px] py-2 px-3 flex-shrink-0">
+                        Product
+                    </p>
+
+                    <p
+                        class="text-[#262149] text-[16px] border-[1px] border-[#B3AEDA] rounded-[5px] py-2 px-3 flex-shrink-0">
+                        Retouch
+                    </p>
+
+                    <p
+                        class="text-[#262149] text-[16px] border-[1px] border-[#B3AEDA] rounded-[5px] py-2 px-3 flex-shrink-0">
+                        Model
+                    </p>
+
+                    <p
+                        class="text-[#262149] text-[16px] border-[1px] border-[#B3AEDA] rounded-[5px] py-2 px-3 flex-shrink-0">
+                        Clean Product
+                    </p>
+
+                    <p
+                        class="text-[#262149] text-[16px] border-[1px] border-[#B3AEDA] rounded-[5px] py-2 px-3 flex-shrink-0">
+                        Shadow
+                    </p>
+
+                    <p
+                        class="text-[#262149] text-[16px] border-[1px] border-[#B3AEDA] rounded-[5px] py-2 px-3 flex-shrink-0">
+                        Masking
+                    </p>
+
+                    <p
+                        class="text-[#262149] text-[16px] border-[1px] border-[#B3AEDA] rounded-[5px] py-2 px-3 flex-shrink-0">
+                        Omnic
+                    </p>
+                </div>
+            </div>
+            <!-- buttons -->
+            <div class="flex flex-col md:flex-row gap-[30px]">
+                <a href="{% url 'blog' %}">
+                    <button
+                        class="text-[#FEFEFE] bg-[#52479E] font-[500] text-[20px] leading-[21px] py-4 lg:py-[22px] w-full px-8 xl:px-0 xl:w-[185px] border-[1px] border-[#52479E] rounded-[10px] transition-all ease-in-out duration-150 active:scale-95 hover:bg-[#FEFEFE] hover:text-[#52479E]">
+                        Back
+                    </button>
+                </a>
+                <a href="{% url 'order' %}">
+                    <button
+                        class="border-[1px] border-[#262149] rounded-[10px] font-[500] text-[#262149] text-[20px] leading-[21px] py-4 lg:py-[22px] w-full md:w-[402px] transition-all ease-in-out duration-150 active:scale-95 hover:bg-[#262149] hover:text-[#FEFEFE]">
+                        Let’s Start With Free Trial
+                    </button>
+                </a>
+            </div>
+        </section>
+
+
+    
+{% endblock main %}
