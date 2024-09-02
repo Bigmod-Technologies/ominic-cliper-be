@@ -1,5 +1,5 @@
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, include
 from apps.webApp import views
 
 urlpatterns = [
@@ -13,7 +13,11 @@ urlpatterns = [
     path('error/', views.error, name='error'),
     path('order/', views.order, name='order'),
     path('pricingImage/', views.pricingImage, name='pricing_image'),
-    path('service/', views.service, name='service'),
-    path('service/details/', views.serviceDetails, name='service_details'),
-    path('service/portfolio/', views.servicePortfolio, name='service_portfolio'),
+
+    #Service app urls
+    path('service/', include('apps.service.urls')),
+
+    #CKeditor
+    path("ckeditor5/", include('django_ckeditor_5.urls')),
+
 ]
