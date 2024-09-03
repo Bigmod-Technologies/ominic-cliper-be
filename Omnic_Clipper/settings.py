@@ -28,6 +28,7 @@ INSTALLED_APPS = [
 
     #dependencies
     'django_ckeditor_5',
+    'django_cleanup',
 
     #Custom apps
     'apps.webApp',

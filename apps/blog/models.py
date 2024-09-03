@@ -23,7 +23,7 @@ class Blog(models.Model):
     upload_time = models.DateTimeField(auto_now_add=True)
     writer = models.ForeignKey(User, on_delete=models.CASCADE)
     short_description = models.TextField()
-    tag = models.ManyToManyField(Tag, null=True, blank=True)
+    tag = models.ManyToManyField(Tag)
     thumbnails = ResizedImageField(upload_to="blog/%Y/%m/%d", quality=75, force_format='WEBP')
     blog_details = CKEditor5Field('Text', config_name='extends')
     updated_at = models.DateTimeField(auto_now=True)

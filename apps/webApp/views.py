@@ -1,9 +1,10 @@
-from django.shortcuts import render
-
+from django.shortcuts import render, get_object_or_404
+from apps.service.models import Service
 
 # Create your views here.
 def home(request):
-    context = {'title': 'Omnic Clipper', 'show_contact_section': True}
+    service = Service.objects.all()
+    context = {'title': 'Omnic Clipper', 'show_contact_section': True, 'service': service}
     return render(request, 'index.html', context)
 
 

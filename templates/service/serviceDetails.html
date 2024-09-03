@@ -7,21 +7,19 @@
                 class="flex flex-col justify-center items-center gap-5 lg:gap-[30px] mt-8 md:mt-16 15i:mt-20 px-4 md:px-12">
                 <div>
                     <p class=" text-center text-[#262149] text-xs md:text-[16px]">
-                        Home - Service - Neck joint
+                        Home - Service - {{ service.service_title }}
                     </p>
                     <p
                         class="text-center text-[#262149] font-bold text-2xl mm:text-3xl md:text-5xl xl:text-7xl 15i:text-[88px] 15i:leading-[92px]">
-                        Neck Joint
+                        {{ service.service_title }}
                     </p>
                 </div>
                 <p
                     class=" text-center text-[#262149] text-xs md:text-sm xl:text-[18px] xl:leading-[22px] max-w-[774px] mx-auto">
-                    Welcome to Dot Clipping, your go-to photo-editing agency for all your image editing needs. At Dot
-                    Clipping, we
-                    understand Welcome to Dot Clipping, your go-to photo-editing agency for all your image editing needs
+                    {{ service.short_description }}
                 </p>
                 <p class="text-[#F76D4A] font-bold md:text-2xl xl:text-[32px] xl:leading-[34px]">
-                    Per Image $0.29
+                    Per Image ${{ service.price }}
                 </p>
                 <a href="{% url 'order' %}" class="w-full flex justify-center">
                     <button
@@ -39,7 +37,7 @@
             <!-- image -->
             <div
                 class="bg-[#CCC8E6] mx-auto rounded-2xl md:rounded-3xl 14i:rounded-[40px] w-full h-[300px] ml:h-[400px] sm:w-[400px] md:w-[500px] md:h-[500px] xl:h-[600px] xl:w-[600px] 14i:w-[750px] 14i:h-[750px] 15i:w-[912px] 15i:h-[912px]">
-
+            <img src="{{ service.cover_image.url }}" alt="{{ service.service_title }}" class="w-full h-full object-cover rounded-2xl md:rounded-3xl 14i:rounded-[40px]">
             </div>
             <!-- description -->
             <div class="space-y-[54px] mt-12 lg:mt-40 14i:mt-20">
@@ -47,59 +45,11 @@
                 <div class="space-y-[23px]">
                     <!-- title -->
                     <p class="text-[#262149] font-[500] text-xl lg:text-[28px] lg:leading-[30px]">
-                        Title about the Blog Title about the Blog
+                        {{ service.service_title }}
                     </p>
                     <!-- body -->
                     <p class="text-[#262149] lg:text-xl">
-                        Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been
-                        the industry's standard
-                        dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it
-                        to make a type specimen
-                        book. It has survived not only five centuries, but also the leap into electronic typesetting,
-                        remaining essentially
-                        unchanged.Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum
-                        has been the industry's
-                        standard dummy text ever since the 1500s, when an unknown printer took a galley of type and
-                        scrambled it to make a type
-                        specimen book. It has survived not only five centuries, but also the leap into electronic
-                        typesetting, remaining
-                        essentially unchanged. Lorem Ipsum is simply dummy text of the printing and typesetting
-                        industry. Lorem Ipsum has been
-                        the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley
-                        of type and scrambled it
-                        to make a type specimen book. It has survived not only five centuries, but also the leap into
-                        electronic typesetting,
-                        remaining essentially unchanged.
-                    </p>
-                </div>
-
-                <!-- part 2 -->
-                <div class="space-y-[23px]">
-                    <!-- title -->
-                    <p class="text-[#262149] font-[500] text-xl lg:text-[28px] lg:leading-[30px]">
-                        Title about the Blog Title about the Blog
-                    </p>
-                    <!-- body -->
-                    <p class="text-[#262149] lg:text-xl">
-                        Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been
-                        the industry's standard
-                        dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it
-                        to make a type specimen
-                        book. It has survived not only five centuries, but also the leap into electronic typesetting,
-                        remaining essentially
-                        unchanged.Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum
-                        has been the industry's
-                        standard dummy text ever since the 1500s, when an unknown printer took a galley of type and
-                        scrambled it to make a type
-                        specimen book. It has survived not only five centuries, but also the leap into electronic
-                        typesetting, remaining
-                        essentially unchanged. Lorem Ipsum is simply dummy text of the printing and typesetting
-                        industry. Lorem Ipsum has been
-                        the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley
-                        of type and scrambled it
-                        to make a type specimen book. It has survived not only five centuries, but also the leap into
-                        electronic typesetting,
-                        remaining essentially unchanged.
+                        {{ service.details_text_editor|safe }}
                     </p>
                 </div>
 
@@ -120,5 +70,4 @@
                 </div>
             </div>
         </section>
-
 {% endblock main %}

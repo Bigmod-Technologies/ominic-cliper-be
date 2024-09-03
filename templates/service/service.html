@@ -34,305 +34,31 @@
         <section
             class="px-4 ml:px-8 mv:px-12 sm:px-4 15i:px-20 py-12 lg:py-20 xl:py-24 15i:py-[120px] max-w-[1510px] mx-auto">
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-[30px] w-full sm:w-fit sm:mx-auto">
-                <!-- service card 1 -->
-                <a href="{% url 'service_details' %}">
+                <!-- service cards -->
+            
+                {% for service in services %}
+                <a href="{% url 'service_details' service.pk %}">
                     <div
                         class="w-full sm:w-[250px] xl:w-[300px] 14i:w-[350px] 15i:w-[437px] border-[1px] border-[#5A4EAE] rounded-[30px]">
                         <div
                             class="bg-[#FEFEFE] rounded-t-[30px] py-[20px] 14i:pt-[35px] 14i:pb-[30px] px-4 xl:px-6 15i:px-[30px]">
                             <p
                                 class="text-[#262149] font-bold text-[20px] leading-[24px] 14i:text-[32px] 14i:leading-[34px]">
-                                NECK JOINT
+                                {{ service.service_title }}
                             </p>
                             <p class="text-[#262149] pt-5 pb-[30px] text-xs 14i:text-[20px] 14i:leading-[28px]">
-                                Welcome to Dot
-                                Clipping, your go-to <br class="hidden 15i:block">photo-editing agency
-                                for all
-                                your
+                                {{ service.short_description }}
                             </p>
-                            <p class="text-[#F76D4A] font-bold text-sm 14i:text-[22px]">Per Image $0.29</p>
+                            <p class="text-[#F76D4A] font-bold text-sm 14i:text-[22px]">Per Image ${{ service.price }}</p>
                         </div>
                         <div
                             class="bg-[#EFEDF7] h-[calc(100vw-32px)] ml:h-[calc(100vw-64px)] mv:h-[calc(100vw-96px)] sm:h-[250px] xl:h-[300px] 14i:h-[350px] 15i:h-[437px] w-full rounded-b-[30px]">
-                            <img src="{% static 'assets/serviceImg2.png' %}" alt="img" class="h-full w-full rounded-b-[30px]">
+                            <img src="{{ service.cover_image.url }}" alt="{{ service.service_title }}" class="h-full w-full rounded-b-[30px]">
                         </div>
                     </div>
                 </a>
-
-                <!-- service card 2 -->
-                <a href="{% url 'service_details' %}">
-                    <div
-                        class="w-full sm:w-[250px] xl:w-[300px] 14i:w-[350px] 15i:w-[437px] border-[1px] border-[#5A4EAE] rounded-[30px]">
-                        <div
-                            class="bg-[#FEFEFE] rounded-t-[30px] py-[20px] 14i:pt-[35px] 14i:pb-[30px] px-4 xl:px-6 15i:px-[30px]">
-                            <p
-                                class="text-[#262149] font-bold text-[20px] leading-[24px] 14i:text-[32px] 14i:leading-[34px]">
-                                NECK JOINT
-                            </p>
-                            <p class="text-[#262149] pt-5 pb-[30px] text-xs 14i:text-[20px] 14i:leading-[28px]">
-                                Welcome to Dot
-                                Clipping, your go-to <br class="hidden 15i:block">photo-editing agency
-                                for all
-                                your
-                            </p>
-                            <p class="text-[#F76D4A] font-bold text-sm 14i:text-[22px]">Per Image $0.29</p>
-                        </div>
-                        <div
-                            class="bg-[#EFEDF7] h-[calc(100vw-32px)] ml:h-[calc(100vw-64px)] mv:h-[calc(100vw-96px)] sm:h-[250px] xl:h-[300px] 14i:h-[350px] 15i:h-[437px] w-full rounded-b-[30px]">
-                            <img src="{% static 'assets/serviceImg2.png' %}" alt="img" class="h-full w-full rounded-b-[30px]">
-                        </div>
-                    </div>
-                </a>
-
-                <!-- service card 3 -->
-                <a href="{% url 'service_details' %}">
-                    <div
-                        class="w-full sm:w-[250px] xl:w-[300px] 14i:w-[350px] 15i:w-[437px] border-[1px] border-[#5A4EAE] rounded-[30px]">
-                        <div
-                            class="bg-[#FEFEFE] rounded-t-[30px] py-[20px] 14i:pt-[35px] 14i:pb-[30px] px-4 xl:px-6 15i:px-[30px]">
-                            <p
-                                class="text-[#262149] font-bold text-[20px] leading-[24px] 14i:text-[32px] 14i:leading-[34px]">
-                                NECK JOINT
-                            </p>
-                            <p class="text-[#262149] pt-5 pb-[30px] text-xs 14i:text-[20px] 14i:leading-[28px]">
-                                Welcome to Dot
-                                Clipping, your go-to <br class="hidden 15i:block">photo-editing agency
-                                for all
-                                your
-                            </p>
-                            <p class="text-[#F76D4A] font-bold text-sm 14i:text-[22px]">Per Image $0.29</p>
-                        </div>
-                        <div
-                            class="bg-[#EFEDF7] h-[calc(100vw-32px)] ml:h-[calc(100vw-64px)] mv:h-[calc(100vw-96px)] sm:h-[250px] xl:h-[300px] 14i:h-[350px] 15i:h-[437px] w-full rounded-b-[30px]">
-                            <img src="{% static 'assets/serviceImg2.png' %}" alt="img" class="h-full w-full rounded-b-[30px]">
-                        </div>
-                    </div>
-                </a>
-
-                <!-- service card 4 -->
-                <a href="{% url 'service_details' %}">
-                    <div
-                        class="w-full sm:w-[250px] xl:w-[300px] 14i:w-[350px] 15i:w-[437px] border-[1px] border-[#5A4EAE] rounded-[30px]">
-                        <div
-                            class="bg-[#FEFEFE] rounded-t-[30px] py-[20px] 14i:pt-[35px] 14i:pb-[30px] px-4 xl:px-6 15i:px-[30px]">
-                            <p
-                                class="text-[#262149] font-bold text-[20px] leading-[24px] 14i:text-[32px] 14i:leading-[34px]">
-                                NECK JOINT
-                            </p>
-                            <p class="text-[#262149] pt-5 pb-[30px] text-xs 14i:text-[20px] 14i:leading-[28px]">
-                                Welcome to Dot
-                                Clipping, your go-to <br class="hidden 15i:block">photo-editing agency
-                                for all
-                                your
-                            </p>
-                            <p class="text-[#F76D4A] font-bold text-sm 14i:text-[22px]">Per Image $0.29</p>
-                        </div>
-                        <div
-                            class="bg-[#EFEDF7] h-[calc(100vw-32px)] ml:h-[calc(100vw-64px)] mv:h-[calc(100vw-96px)] sm:h-[250px] xl:h-[300px] 14i:h-[350px] 15i:h-[437px] w-full rounded-b-[30px]">
-                            <img src="{% static 'assets/serviceImg2.png' %}" alt="img" class="h-full w-full rounded-b-[30px]">
-                        </div>
-                    </div>
-                </a>
-
-                <!-- service card 5 -->
-                <a href="{% url 'service_details' %}">
-                    <div
-                        class="w-full sm:w-[250px] xl:w-[300px] 14i:w-[350px] 15i:w-[437px] border-[1px] border-[#5A4EAE] rounded-[30px]">
-                        <div
-                            class="bg-[#FEFEFE] rounded-t-[30px] py-[20px] 14i:pt-[35px] 14i:pb-[30px] px-4 xl:px-6 15i:px-[30px]">
-                            <p
-                                class="text-[#262149] font-bold text-[20px] leading-[24px] 14i:text-[32px] 14i:leading-[34px]">
-                                NECK JOINT
-                            </p>
-                            <p class="text-[#262149] pt-5 pb-[30px] text-xs 14i:text-[20px] 14i:leading-[28px]">
-                                Welcome to Dot
-                                Clipping, your go-to <br class="hidden 15i:block">photo-editing agency
-                                for all
-                                your
-                            </p>
-                            <p class="text-[#F76D4A] font-bold text-sm 14i:text-[22px]">Per Image $0.29</p>
-                        </div>
-                        <div
-                            class="bg-[#EFEDF7] h-[calc(100vw-32px)] ml:h-[calc(100vw-64px)] mv:h-[calc(100vw-96px)] sm:h-[250px] xl:h-[300px] 14i:h-[350px] 15i:h-[437px] w-full rounded-b-[30px]">
-                            <img src="{% static 'assets/serviceImg2.png' %}" alt="img" class="h-full w-full rounded-b-[30px]">
-                        </div>
-                    </div>
-                </a>
-
-                <!-- service card 6 -->
-                <a href="{% url 'service_details' %}">
-                    <div
-                        class="w-full sm:w-[250px] xl:w-[300px] 14i:w-[350px] 15i:w-[437px] border-[1px] border-[#5A4EAE] rounded-[30px]">
-                        <div
-                            class="bg-[#FEFEFE] rounded-t-[30px] py-[20px] 14i:pt-[35px] 14i:pb-[30px] px-4 xl:px-6 15i:px-[30px]">
-                            <p
-                                class="text-[#262149] font-bold text-[20px] leading-[24px] 14i:text-[32px] 14i:leading-[34px]">
-                                NECK JOINT
-                            </p>
-                            <p class="text-[#262149] pt-5 pb-[30px] text-xs 14i:text-[20px] 14i:leading-[28px]">
-                                Welcome to Dot
-                                Clipping, your go-to <br class="hidden 15i:block">photo-editing agency
-                                for all
-                                your
-                            </p>
-                            <p class="text-[#F76D4A] font-bold text-sm 14i:text-[22px]">Per Image $0.29</p>
-                        </div>
-                        <div
-                            class="bg-[#EFEDF7] h-[calc(100vw-32px)] ml:h-[calc(100vw-64px)] mv:h-[calc(100vw-96px)] sm:h-[250px] xl:h-[300px] 14i:h-[350px] 15i:h-[437px] w-full rounded-b-[30px]">
-                            <img src="{% static 'assets/serviceImg2.png' %}" alt="img" class="h-full w-full rounded-b-[30px]">
-                        </div>
-                    </div>
-                </a>
-
-                <!-- service card 7 -->
-                <a href="{% url 'service_details' %}">
-                    <div
-                        class="w-full sm:w-[250px] xl:w-[300px] 14i:w-[350px] 15i:w-[437px] border-[1px] border-[#5A4EAE] rounded-[30px]">
-                        <div
-                            class="bg-[#FEFEFE] rounded-t-[30px] py-[20px] 14i:pt-[35px] 14i:pb-[30px] px-4 xl:px-6 15i:px-[30px]">
-                            <p
-                                class="text-[#262149] font-bold text-[20px] leading-[24px] 14i:text-[32px] 14i:leading-[34px]">
-                                NECK JOINT
-                            </p>
-                            <p class="text-[#262149] pt-5 pb-[30px] text-xs 14i:text-[20px] 14i:leading-[28px]">
-                                Welcome to Dot
-                                Clipping, your go-to <br class="hidden 15i:block">photo-editing agency
-                                for all
-                                your
-                            </p>
-                            <p class="text-[#F76D4A] font-bold text-sm 14i:text-[22px]">Per Image $0.29</p>
-                        </div>
-                        <div
-                            class="bg-[#EFEDF7] h-[calc(100vw-32px)] ml:h-[calc(100vw-64px)] mv:h-[calc(100vw-96px)] sm:h-[250px] xl:h-[300px] 14i:h-[350px] 15i:h-[437px] w-full rounded-b-[30px]">
-                            <img src="{% static 'assets/serviceImg2.png' %}" alt="img" class="h-full w-full rounded-b-[30px]">
-                        </div>
-                    </div>
-                </a>
-
-                <!-- service card 8 -->
-                <a href="{% url 'service_details' %}">
-                    <div
-                        class="w-full sm:w-[250px] xl:w-[300px] 14i:w-[350px] 15i:w-[437px] border-[1px] border-[#5A4EAE] rounded-[30px]">
-                        <div
-                            class="bg-[#FEFEFE] rounded-t-[30px] py-[20px] 14i:pt-[35px] 14i:pb-[30px] px-4 xl:px-6 15i:px-[30px]">
-                            <p
-                                class="text-[#262149] font-bold text-[20px] leading-[24px] 14i:text-[32px] 14i:leading-[34px]">
-                                NECK JOINT
-                            </p>
-                            <p class="text-[#262149] pt-5 pb-[30px] text-xs 14i:text-[20px] 14i:leading-[28px]">
-                                Welcome to Dot
-                                Clipping, your go-to <br class="hidden 15i:block">photo-editing agency
-                                for all
-                                your
-                            </p>
-                            <p class="text-[#F76D4A] font-bold text-sm 14i:text-[22px]">Per Image $0.29</p>
-                        </div>
-                        <div
-                            class="bg-[#EFEDF7] h-[calc(100vw-32px)] ml:h-[calc(100vw-64px)] mv:h-[calc(100vw-96px)] sm:h-[250px] xl:h-[300px] 14i:h-[350px] 15i:h-[437px] w-full rounded-b-[30px]">
-                            <img src="{% static 'assets/serviceImg2.png' %}" alt="img" class="h-full w-full rounded-b-[30px]">
-                        </div>
-                    </div>
-                </a>
-
-                <!-- service card 9 -->
-                <a href="{% url 'service_details' %}">
-                    <div
-                        class="w-full sm:w-[250px] xl:w-[300px] 14i:w-[350px] 15i:w-[437px] border-[1px] border-[#5A4EAE] rounded-[30px]">
-                        <div
-                            class="bg-[#FEFEFE] rounded-t-[30px] py-[20px] 14i:pt-[35px] 14i:pb-[30px] px-4 xl:px-6 15i:px-[30px]">
-                            <p
-                                class="text-[#262149] font-bold text-[20px] leading-[24px] 14i:text-[32px] 14i:leading-[34px]">
-                                NECK JOINT
-                            </p>
-                            <p class="text-[#262149] pt-5 pb-[30px] text-xs 14i:text-[20px] 14i:leading-[28px]">
-                                Welcome to Dot
-                                Clipping, your go-to <br class="hidden 15i:block">photo-editing agency
-                                for all
-                                your
-                            </p>
-                            <p class="text-[#F76D4A] font-bold text-sm 14i:text-[22px]">Per Image $0.29</p>
-                        </div>
-                        <div
-                            class="bg-[#EFEDF7] h-[calc(100vw-32px)] ml:h-[calc(100vw-64px)] mv:h-[calc(100vw-96px)] sm:h-[250px] xl:h-[300px] 14i:h-[350px] 15i:h-[437px] w-full rounded-b-[30px]">
-                            <img src="{% static 'assets/serviceImg2.png' %}" alt="img" class="h-full w-full rounded-b-[30px]">
-                        </div>
-                    </div>
-                </a>
-
-                <!-- service card 10 -->
-                <a href="{% url 'service_details' %}">
-                    <div
-                        class="w-full sm:w-[250px] xl:w-[300px] 14i:w-[350px] 15i:w-[437px] border-[1px] border-[#5A4EAE] rounded-[30px]">
-                        <div
-                            class="bg-[#FEFEFE] rounded-t-[30px] py-[20px] 14i:pt-[35px] 14i:pb-[30px] px-4 xl:px-6 15i:px-[30px]">
-                            <p
-                                class="text-[#262149] font-bold text-[20px] leading-[24px] 14i:text-[32px] 14i:leading-[34px]">
-                                NECK JOINT
-                            </p>
-                            <p class="text-[#262149] pt-5 pb-[30px] text-xs 14i:text-[20px] 14i:leading-[28px]">
-                                Welcome to Dot
-                                Clipping, your go-to <br class="hidden 15i:block">photo-editing agency
-                                for all
-                                your
-                            </p>
-                            <p class="text-[#F76D4A] font-bold text-sm 14i:text-[22px]">Per Image $0.29</p>
-                        </div>
-                        <div
-                            class="bg-[#EFEDF7] h-[calc(100vw-32px)] ml:h-[calc(100vw-64px)] mv:h-[calc(100vw-96px)] sm:h-[250px] xl:h-[300px] 14i:h-[350px] 15i:h-[437px] w-full rounded-b-[30px]">
-                            <img src="{% static 'assets/serviceImg2.png' %}" alt="img" class="h-full w-full rounded-b-[30px]">
-                        </div>
-                    </div>
-                </a>
-
-                <!-- service card 11 -->
-                <a href="{% url 'service_details' %}">
-                    <div
-                        class="w-full sm:w-[250px] xl:w-[300px] 14i:w-[350px] 15i:w-[437px] border-[1px] border-[#5A4EAE] rounded-[30px]">
-                        <div
-                            class="bg-[#FEFEFE] rounded-t-[30px] py-[20px] 14i:pt-[35px] 14i:pb-[30px] px-4 xl:px-6 15i:px-[30px]">
-                            <p
-                                class="text-[#262149] font-bold text-[20px] leading-[24px] 14i:text-[32px] 14i:leading-[34px]">
-                                NECK JOINT
-                            </p>
-                            <p class="text-[#262149] pt-5 pb-[30px] text-xs 14i:text-[20px] 14i:leading-[28px]">
-                                Welcome to Dot
-                                Clipping, your go-to <br class="hidden 15i:block">photo-editing agency
-                                for all
-                                your
-                            </p>
-                            <p class="text-[#F76D4A] font-bold text-sm 14i:text-[22px]">Per Image $0.29</p>
-                        </div>
-                        <div
-                            class="bg-[#EFEDF7] h-[calc(100vw-32px)] ml:h-[calc(100vw-64px)] mv:h-[calc(100vw-96px)] sm:h-[250px] xl:h-[300px] 14i:h-[350px] 15i:h-[437px] w-full rounded-b-[30px]">
-                            <img src="{% static 'assets/serviceImg2.png' %}" alt="img" class="h-full w-full rounded-b-[30px]">
-                        </div>
-                    </div>
-                </a>
-
-                <!-- service card 12 -->
-                <a href="{% url 'service_details' %}">
-                    <div
-                        class="w-full sm:w-[250px] xl:w-[300px] 14i:w-[350px] 15i:w-[437px] border-[1px] border-[#5A4EAE] rounded-[30px]">
-                        <div
-                            class="bg-[#FEFEFE] rounded-t-[30px] py-[20px] 14i:pt-[35px] 14i:pb-[30px] px-4 xl:px-6 15i:px-[30px]">
-                            <p
-                                class="text-[#262149] font-bold text-[20px] leading-[24px] 14i:text-[32px] 14i:leading-[34px]">
-                                NECK JOINT
-                            </p>
-                            <p class="text-[#262149] pt-5 pb-[30px] text-xs 14i:text-[20px] 14i:leading-[28px]">
-                                Welcome to Dot
-                                Clipping, your go-to <br class="hidden 15i:block">photo-editing agency
-                                for all
-                                your
-                            </p>
-                            <p class="text-[#F76D4A] font-bold text-sm 14i:text-[22px]">Per Image $0.29</p>
-                        </div>
-                        <div
-                            class="bg-[#EFEDF7] h-[calc(100vw-32px)] ml:h-[calc(100vw-64px)] mv:h-[calc(100vw-96px)] sm:h-[250px] xl:h-[300px] 14i:h-[350px] 15i:h-[437px] w-full rounded-b-[30px]">
-                            <img src="{% static 'assets/serviceImg2.png' %}" alt="img" class="h-full w-full rounded-b-[30px]">
-                        </div>
-                    </div>
-                </a>
+                {% endfor %}
+            
             </div>
         </section>
 
