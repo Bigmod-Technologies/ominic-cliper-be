@@ -7,16 +7,6 @@ def home(request):
     return render(request, 'index.html', context)
 
 
-def blog(request):
-    context = {'title': 'Blog', 'show_contact_section': True}
-    return render(request, 'blog/blog.html', context)
-
-
-def blogDetails(request):
-    context = {'title': 'Blog Details', 'show_contact_section': True}
-    return render(request, 'blog/blogDetails.html', context)
-
-
 def termsOfService(request):
     context = {'title': 'Terms of Service', 'show_contact_section': False, 'contact_url': True}
     return render(request, 'others/405.html', context)
