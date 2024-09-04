@@ -47,62 +47,44 @@
             class="px-4 sm:px-8 md:px-16 lg:px-24 xl:px-32 14i:px-48 15i:px-[235px] py-8 sm:py-12 md:py-20 14i:py-[100px] space-y-8 xl:space-y-[54px] max-w-[1510px] mx-auto">
             <!-- image -->
             <div class="aspect-w-1 aspect-h-1 rounded-[50px]">
-                <img src="{% static 'assets/Rectangle.png' %}" alt="Image" class="object-cover w-full h-full rounded-[50px]">
+                <img src="{{ blog.thumbnails.url }}" alt="{{ blog.title }}" class="object-cover w-full h-full rounded-[50px]">
             </div>
             <!-- description 1 -->
             <div class="space-y-5">
                 <p class="text-[#001210] font-[500] lg:text-xl 14i:text-[36px] 14i:leading-[46px]">
-                    Title about the Blog Title about the Blog
+                    {{ blog.title }}
                 </p>
                 <p class="text-[#001210] text-sm lg:text-[16px] 14i:text-xl">
-                    Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the
-                    industry's standard
-                    dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to
-                    make a type specimen
-                    book. It has survived not only five centuries, but also the leap into electronic typesetting,
-                    remaining essentially
-                    unchanged.Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has
-                    been the industry's
-                    standard dummy text ever since the 1500s, when an unknown printer took a galley of type and
-                    scrambled it to make a type
-                    specimen book. It has survived not only five centuries, but also the leap into electronic
-                    typesetting, remaining
-                    essentially unchanged. Lorem Ipsum is simply dummy text of the printing and typesetting industry.
-                    Lorem Ipsum has been
-                    the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of
-                    type and scrambled it
-                    to make a type specimen book. It has survived not only five centuries, but also the leap into
-                    electronic typesetting,
-                    remaining essentially unchanged.
+                    {{ blog.blog_details|safe }}
                 </p>
             </div>
-            <!-- description 2 -->
-            <div class="space-y-5">
-                <p class="text-[#001210] font-[500] lg:text-xl 14i:text-[36px] 14i:leading-[46px]">
-                    Title about the Blog Title about the Blog
-                </p>
-                <p class="text-[#001210] text-sm lg:text-[16px] 14i:text-xl">
-                    Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the
-                    industry's standard
-                    dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to
-                    make a type specimen
-                    book. It has survived not only five centuries, but also the leap into electronic typesetting,
-                    remaining essentially
-                    unchanged.Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has
-                    been the industry's
-                    standard dummy text ever since the 1500s, when an unknown printer took a galley of type and
-                    scrambled it to make a type
-                    specimen book. It has survived not only five centuries, but also the leap into electronic
-                    typesetting, remaining
-                    essentially unchanged. Lorem Ipsum is simply dummy text of the printing and typesetting industry.
-                    Lorem Ipsum has been
-                    the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of
-                    type and scrambled it
-                    to make a type specimen book. It has survived not only five centuries, but also the leap into
-                    electronic typesetting,
-                    remaining essentially unchanged.
-                </p>
-            </div>
+{#            <!-- description 2 -->#}
+{#            <div class="space-y-5">#}
+{#                <p class="text-[#001210] font-[500] lg:text-xl 14i:text-[36px] 14i:leading-[46px]">#}
+{#                    Title about the Blog Title about the Blog#}
+{#                </p>#}
+{#                <p class="text-[#001210] text-sm lg:text-[16px] 14i:text-xl">#}
+{#                    Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the#}
+{#                    industry's standard#}
+{#                    dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to#}
+{#                    make a type specimen#}
+{#                    book. It has survived not only five centuries, but also the leap into electronic typesetting,#}
+{#                    remaining essentially#}
+{#                    unchanged.Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has#}
+{#                    been the industry's#}
+{#                    standard dummy text ever since the 1500s, when an unknown printer took a galley of type and#}
+{#                    scrambled it to make a type#}
+{#                    specimen book. It has survived not only five centuries, but also the leap into electronic#}
+{#                    typesetting, remaining#}
+{#                    essentially unchanged. Lorem Ipsum is simply dummy text of the printing and typesetting industry.#}
+{#                    Lorem Ipsum has been#}
+{#                    the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of#}
+{#                    type and scrambled it#}
+{#                    to make a type specimen book. It has survived not only five centuries, but also the leap into#}
+{#                    electronic typesetting,#}
+{#                    remaining essentially unchanged.#}
+{#                </p>#}
+{#            </div>#}
             <!-- tags -->
             <div class="space-y-5">
                 <p class="text-[#001210] font-[500] lg:text-xl 14i:text-[36px] 14i:leading-[46px]">
@@ -110,55 +92,12 @@
                 </p>
                 <div
                     class="p-5 flex flex-wrap gap-x-[5px] gap-y-5 border-[#B3AEDA] border-[1px] rounded-[10px]w-full md:max-w-[593px] rounded-[10px]">
+                    {% for tag in blog.tag.all %}
                     <p
                         class="text-[#262149] text-[16px] border-[1px] border-[#B3AEDA] rounded-[5px] py-2 px-3 flex-shrink-0">
-                        Neck joint
+                        {{ tag.name }}{% if not forloop.last %} {% endif %}
                     </p>
-
-                    <p
-                        class="text-[#262149] text-[16px] border-[1px] border-[#B3AEDA] rounded-[5px] py-2 px-3 flex-shrink-0">
-                        Background remove
-                    </p>
-
-                    <p
-                        class="text-[#262149] text-[16px] border-[1px] border-[#B3AEDA] rounded-[5px] py-2 px-3 flex-shrink-0">
-                        Symmetric
-                    </p>
-
-                    <p
-                        class="text-[#262149] text-[16px] border-[1px] border-[#B3AEDA] rounded-[5px] py-2 px-3 flex-shrink-0">
-                        Product
-                    </p>
-
-                    <p
-                        class="text-[#262149] text-[16px] border-[1px] border-[#B3AEDA] rounded-[5px] py-2 px-3 flex-shrink-0">
-                        Retouch
-                    </p>
-
-                    <p
-                        class="text-[#262149] text-[16px] border-[1px] border-[#B3AEDA] rounded-[5px] py-2 px-3 flex-shrink-0">
-                        Model
-                    </p>
-
-                    <p
-                        class="text-[#262149] text-[16px] border-[1px] border-[#B3AEDA] rounded-[5px] py-2 px-3 flex-shrink-0">
-                        Clean Product
-                    </p>
-
-                    <p
-                        class="text-[#262149] text-[16px] border-[1px] border-[#B3AEDA] rounded-[5px] py-2 px-3 flex-shrink-0">
-                        Shadow
-                    </p>
-
-                    <p
-                        class="text-[#262149] text-[16px] border-[1px] border-[#B3AEDA] rounded-[5px] py-2 px-3 flex-shrink-0">
-                        Masking
-                    </p>
-
-                    <p
-                        class="text-[#262149] text-[16px] border-[1px] border-[#B3AEDA] rounded-[5px] py-2 px-3 flex-shrink-0">
-                        Omnic
-                    </p>
+                    {% endfor %}
                 </div>
             </div>
             <!-- buttons -->
