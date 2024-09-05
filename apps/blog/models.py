@@ -2,6 +2,7 @@ from django.contrib.auth.models import User
 from django.db import models
 from django_resized import ResizedImageField
 from django_ckeditor_5.fields import CKEditor5Field
+from autoslug import AutoSlugField
 import uuid
 
 
@@ -19,6 +20,7 @@ class Blog(models.Model):
     ]
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     title = models.CharField(max_length=100)
+    blog_slug = AutoSlugField(populate_from='title', unique=True, null=True, default=None)
     status = models.CharField(max_length=10, choices=STATUS_CHOICES, default='draft')
     upload_time = models.DateTimeField(auto_now_add=True)
     writer = models.ForeignKey(User, on_delete=models.CASCADE)

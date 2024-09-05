@@ -9,28 +9,24 @@
                 <div class="lg:max-w-[450px] 14i:max-w-[548px]">
                     <div>
                         <p class="text-[#262149] text-xs md:text-[16px]">
-                            Home - Blog Details
+                            Home - Blog - {{ blog.title }}
                         </p>
                         <p
                             class="text-[#262149] font-bold text-2xl mm:text-3xl md:text-5xl lg:text-4xl 14i:text-[42px] 14i:leading-[54px]">
-                            Welcome to Dot Clipping, your go-to photo
+                            {{ blog.title }}
                         </p>
                     </div>
                     <p class="text-[#262149] text-xs md:text-sm xl:text-[18px] 15i:text-xl mt-4 md:mt-5">
-                        Welcome to Dot Clipping, your go-to photo-editing agency for all your image editing needs. At
-                        Dot
-                        Clipping, we
-                        understand Welcome to Dot Clipping, your go-to photo-editing agency for all your image editing
-                        needs
+                        {{ blog.short_description }}
                     </p>
                 </div>
                 <!-- right -->
                 <div>
                     <p class="text-[#012B27] font-bold text-[16px] lg:text-xl 15i:text-[22px] 15i:leading-[28px]">
-                        12 Jan 2023
+                        {{ blog.upload_time }}
                     </p>
                     <p class="text-[#012B27] font-bold text-[16px] lg:text-xl 15i:text-[22px] 15i:leading-[28px]">
-                        Written By:<span class="text-[#E64E28]">Omnic Clipper</span>
+                        Written By:<span class="text-[#E64E28]">{{ blog.writer }}</span>
                     </p>
                     <div class="flex gap-5 mt-2 lg:mt-5">
                         <img src="{% static 'assets/Ellipse1.png' %}" alt="img">
@@ -58,33 +54,6 @@
                     {{ blog.blog_details|safe }}
                 </p>
             </div>
-{#            <!-- description 2 -->#}
-{#            <div class="space-y-5">#}
-{#                <p class="text-[#001210] font-[500] lg:text-xl 14i:text-[36px] 14i:leading-[46px]">#}
-{#                    Title about the Blog Title about the Blog#}
-{#                </p>#}
-{#                <p class="text-[#001210] text-sm lg:text-[16px] 14i:text-xl">#}
-{#                    Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the#}
-{#                    industry's standard#}
-{#                    dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to#}
-{#                    make a type specimen#}
-{#                    book. It has survived not only five centuries, but also the leap into electronic typesetting,#}
-{#                    remaining essentially#}
-{#                    unchanged.Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has#}
-{#                    been the industry's#}
-{#                    standard dummy text ever since the 1500s, when an unknown printer took a galley of type and#}
-{#                    scrambled it to make a type#}
-{#                    specimen book. It has survived not only five centuries, but also the leap into electronic#}
-{#                    typesetting, remaining#}
-{#                    essentially unchanged. Lorem Ipsum is simply dummy text of the printing and typesetting industry.#}
-{#                    Lorem Ipsum has been#}
-{#                    the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of#}
-{#                    type and scrambled it#}
-{#                    to make a type specimen book. It has survived not only five centuries, but also the leap into#}
-{#                    electronic typesetting,#}
-{#                    remaining essentially unchanged.#}
-{#                </p>#}
-{#            </div>#}
             <!-- tags -->
             <div class="space-y-5">
                 <p class="text-[#001210] font-[500] lg:text-xl 14i:text-[36px] 14i:leading-[46px]">

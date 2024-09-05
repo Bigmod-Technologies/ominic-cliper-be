@@ -37,7 +37,7 @@
                 <!-- service cards -->
             
                 {% for service in services %}
-                <a href="{% url 'service_details' service.pk %}">
+                <a href="{% url 'service_details' service.service_slug %}">
                     <div
                         class="w-full sm:w-[250px] xl:w-[300px] 14i:w-[350px] 15i:w-[437px] border-[1px] border-[#5A4EAE] rounded-[30px]">
                         <div

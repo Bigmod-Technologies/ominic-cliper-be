@@ -1,5 +1,6 @@
 from django.shortcuts import render, get_object_or_404
 from apps.service.models import Service
+from django.conf.urls import handler404
 
 # Create your views here.
 def home(request):
@@ -24,8 +25,7 @@ def about(request):
 
 
 def error(request):
-    context = {'title': 'Error', 'show_contact_section': False, 'contact_url': True}
-    return render(request, 'others/error.html', context)
+    return render(request, 'others/error.html', status=404)
 
 
 def order(request):
