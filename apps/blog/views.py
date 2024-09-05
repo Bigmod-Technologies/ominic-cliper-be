@@ -1,3 +1,4 @@
+from django.core.paginator import Paginator
 from django.shortcuts import render, get_object_or_404
 from .models import Blog
 
@@ -6,7 +7,10 @@ from .models import Blog
 
 def blog(request):
     blogs = Blog.objects.all()
-    context = {'title': 'Blog', 'show_contact_section': True, 'blog': blogs}
+    paginator = Paginator(blogs, 6)  # Show 6 blogs per page
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+    context = {'title': 'Blog', 'show_contact_section': True, 'blog': blogs, 'page_obj': page_obj}
     return render(request, 'blog/blog.html', context)
 
 

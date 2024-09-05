@@ -1485,7 +1485,7 @@ video {
 }
 
 .text-xs {
-  font-size: 0.75rem;
+  font-size: 0.75rem; !important;
   line-height: 1rem;
 }
 
@@ -2445,7 +2445,7 @@ video {
   }
 
   .lg\:text-\[16px\] {
-    font-size: 16px;
+    font-size: 16px; !important;
   }
 
   .lg\:text-\[18px\] {

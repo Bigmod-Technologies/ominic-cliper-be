@@ -663,5 +663,88 @@
                 </div>
             </div>
         </section>
+    <!-- -------------scripts------------ -->
+    <!-- Swiper JS -->
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    <script>
+        // sidebar handling---------------
+        const showSidebar = () => {
+            document.getElementById("sidebar").classList.remove("w-0")
+            document.getElementById("sidebar").classList.add("w-[70vw]")
+        }
+        const hideSidebar = () => {
+            document.getElementById("sidebar").classList.remove("w-[70vw]")
+            document.getElementById("sidebar").classList.add("w-0")
+        }
+        // image divider--------------------
+        document.querySelectorAll('.image-comparison-container').forEach(container => {
+            const resizableDiv = container.querySelector('.resizable-div');
+            const resizer = container.querySelector('.resizer');
 
+            // Mouse events for desktop
+            resizer.addEventListener('mousedown', (e) => {
+                e.preventDefault();
+                document.addEventListener('mousemove', resize);
+                document.addEventListener('mouseup', stopResize);
+            });
+
+            // Touch events for mobile
+            resizer.addEventListener('touchstart', (e) => {
+                e.preventDefault();
+                document.addEventListener('touchmove', resizeTouch);
+                document.addEventListener('touchend', stopResizeTouch);
+            });
+
+            const resize = (e) => {
+                resizableDiv.style.width = e.pageX - resizableDiv.getBoundingClientRect().left + 'px';
+            }
+
+            const stopResize = () => {
+                document.removeEventListener('mousemove', resize);
+                document.removeEventListener('mouseup', stopResize);
+            }
+
+            const resizeTouch = (e) => {
+                const touch = e.touches[0];
+                resizableDiv.style.width = touch.pageX - resizableDiv.getBoundingClientRect().left + 'px';
+            }
+
+            const stopResizeTouch = () => {
+                document.removeEventListener('touchmove', resizeTouch);
+                document.removeEventListener('touchend', stopResizeTouch);
+            }
+        });
+
+
+
+        var swiper = new Swiper(".mySwiper", {
+            slidesPerView: "auto",
+            centeredSlides: true,
+            spaceBetween: 30,
+            initialSlide: 1,  // Start at the 2nd slide (index 1)
+            breakpoints: {
+                768: {
+                    spaceBetween: 60,
+                }
+            },
+            pagination: {
+                el: ".swiper-pagination",
+                clickable: true,
+            },
+            navigation: {
+                nextEl: ".swiper-button-next",
+                prevEl: ".swiper-button-prev",
+            },
+        });
+
+
+        const showPopup = () => {
+            document.getElementById("popup").classList.remove("hidden");
+            document.getElementById("popup").classList.add("block");
+        }
+        const hidePopUp = () => {
+            document.getElementById("popup").classList.remove("block");
+            document.getElementById("popup").classList.add("hidden");
+        }
+    </script>
 {% endblock main %}

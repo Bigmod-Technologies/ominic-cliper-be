@@ -26,9 +26,8 @@
         <section class="px-4 mm:px-12 ml:px-16 sm:px-4 py-8 md:py-12 lg:py-16 xl:py-20 15i:py-[120px]">
             <div>
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-[30px] w-full sm:w-fit sm:mx-auto">
-                    <!-- service card 1 -->
-                    {% for blog in blog %}
-
+                    <!-- Loop through the paginated blogs -->
+                    {% for blog in page_obj %}
                     <a href="{% url 'blog_details' blog.blog_slug %}">
                         <div class="w-full sm:w-[250px] xl:w-[300px] 14i:w-[350px] 15i:w-[437px] border-[1px] border-[#5A4EAE] rounded-[30px]">
                             <!-- image container -->
@@ -41,7 +40,7 @@
                                     {{ blog.short_description }}
                                 </p>
                                 <p class="text-[#262149] pt-5 pb-[30px] text-xs lg:text-[16px] 14i:text-xl">
-                                    {{ blog.blog_details|safe|truncatewords:6 }}
+                                    {{ blog.blog_details|safe|truncatewords:7 }}
                                 </p>
                                 <p class="text-[#F76D4A] font-[500] text-sm lg:text-[18px] 14i:text-[20px] flex items-center gap-2">
                                     <span>Read More</span> <img src="{% static 'assets/Arrow.png' %}" alt="arrow">
@@ -49,26 +48,42 @@
                             </div>
                         </div>
                     </a>
-
                     {% endfor %}
                 </div>
 
-                <!-- navigation -->
+                <!-- Pagination controls -->
                 <div class="flex justify-center items-center gap-2 14i:gap-[17px] mt-12 14i:mt-20">
-                    <img src="{% static 'assets/left.png' %}" alt="icon" class="cursor-pointer w-[30px] h-[30px] md:w-[42px] md:h-[42px]">
-                    <div class="bg-[#262149] text-[#EFEDF7] border-[1px] border-[#262149] w-[30px] leading-[30px] md:w-[53px] md:leading-[53px] text-center 15i:text-[24px] rounded-full">
-                        1
-                    </div>
-                    <div class="bg-[#EFEDF7] text-[#262149] border-[1px] border-[#262149] w-[30px] leading-[30px] md:w-[53px] md:leading-[53px] text-center 15i:text-[24px] rounded-full">
-                        2
-                    </div>
-                    <div class="bg-[#EFEDF7] text-[#262149] border-[1px] border-[#262149] w-[30px] leading-[30px] md:w-[53px] md:leading-[53px] text-center 15i:text-[24px] rounded-full">
-                        3
-                    </div>
-                    <div class="bg-[#EFEDF7] text-[#262149] border-[1px] border-[#262149] w-[30px] leading-[30px] md:w-[53px] md:leading-[53px] text-center 15i:text-[24px] rounded-full">
-                        4
-                    </div>
-                    <img src="{% static 'assets/right.png' %}" alt="icon" class="cursor-pointer w-[30px] h-[30px] md:w-[42px] md:h-[42px]">
+
+                    <!-- Previous Page -->
+                    {% if page_obj.has_previous %}
+                    <a href="?page={{ page_obj.previous_page_number }}">
+                        <img src="{% static 'assets/left.png' %}" alt="Previous" class="cursor-pointer w-[30px] h-[30px] md:w-[42px] md:h-[42px]">
+                    </a>
+                    {% else %}
+                    <img src="{% static 'assets/left.png' %}" alt="Previous" class="w-[30px] h-[30px] md:w-[42px] md:h-[42px] opacity-50 cursor-not-allowed">
+                    {% endif %}
+
+                    <!-- Page Numbers -->
+                    {% for page_num in page_obj.paginator.page_range %}
+                    <a href="?page={{ page_num }}" class="w-[30px] leading-[30px] md:w-[53px] md:leading-[53px] text-center 15i:text-[24px] rounded-full
+                       {% if page_obj.number == page_num %}
+                       bg-[#262149] text-[#EFEDF7] border-[#262149]
+                       {% else %}
+                       bg-[#EFEDF7] text-[#262149] border-[#262149]
+                       {% endif %} border-[1px]">
+                        {{ page_num }}
+                    </a>
+                    {% endfor %}
+
+                    <!-- Next Page -->
+                    {% if page_obj.has_next %}
+                    <a href="?page={{ page_obj.next_page_number }}">
+                        <img src="{% static 'assets/right.png' %}" alt="Next" class="cursor-pointer w-[30px] h-[30px] md:w-[42px] md:h-[42px]">
+                    </a>
+                    {% else %}
+                    <img src="{% static 'assets/right.png' %}" alt="Next" class="w-[30px] h-[30px] md:w-[42px] md:h-[42px] opacity-50 cursor-not-allowed">
+                    {% endif %}
+
                 </div>
             </div>
         </section>
