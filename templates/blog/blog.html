@@ -37,10 +37,10 @@
                             <!-- description -->
                             <div class="bg-[#FEFEFE] rounded-b-[30px] py-[20px] 15i:pt-[27px] 15i:pb-[38px] px-4 xl:px-6 15i:px-[34px]">
                                 <p class="text-[#262149] font-[500] text-[20px] leading-[24px] 14i:text-[28px]">
-                                    {{ blog.short_description }}
+                                    {{ blog.title }}
                                 </p>
                                 <p class="text-[#262149] pt-5 pb-[30px] text-xs lg:text-[16px] 14i:text-xl">
-                                    {{ blog.blog_details|safe|truncatewords:7 }}
+                                    {{ blog.short_description }}
                                 </p>
                                 <p class="text-[#F76D4A] font-[500] text-sm lg:text-[18px] 14i:text-[20px] flex items-center gap-2">
                                     <span>Read More</span> <img src="{% static 'assets/Arrow.png' %}" alt="arrow">
