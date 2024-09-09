@@ -1,0 +1,90 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block main %}
+        <section>
+            <div class="flex flex-col justify-center items-center gap-5 lg:gap-[30px] mt-8 md:mt-16 15i:mt-20 px-4 md:px-12">
+                <div>
+                    <p class="text-center text-[#001210] text-xs md:text-[16px]">
+                        Home - Blog
+                    </p>
+                    <p class="text-center text-[#001210] font-bold text-2xl mm:text-3xl md:text-5xl xl:text-7xl 15i:text-[88px] 15i:leading-[92px]">
+                        Our Blogs
+                    </p>
+                </div>
+                <p class="text-center text-[#001210] text-xs md:text-sm xl:text-[18px] xl:leading-[22px] max-w-[774px] mx-auto">
+                    Welcome to Dot Clipping, your go-to photo-editing agency for all your image editing needs.
+                </p>
+                <a href="{% url 'order' %}" class="w-full flex justify-center">
+                    <button class="text-[#262149] font-[500] text-[20px] leading-[21px] py-4 lg:py-[22px] w-full sm:w-[346px] border-[1px] border-[#262149] rounded-[10px] transition-all ease-in-out duration-150 active:scale-95 hover:bg-[#262149] hover:text-white">
+                        Let’s Start With Free Trial
+                    </button>
+                </a>
+            </div>
+        </section>
+
+        <!-- =============================blogs================================ -->
+        <section class="px-4 mm:px-12 ml:px-16 sm:px-4 py-8 md:py-12 lg:py-16 xl:py-20 15i:py-[120px]">
+            <div>
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-[30px] w-full sm:w-fit sm:mx-auto">
+                    <!-- Loop through the paginated blogs -->
+                    {% for blog in page_obj %}
+                    <a href="{% url 'blog_details' blog.blog_slug %}">
+                        <div class="w-full sm:w-[250px] xl:w-[300px] 14i:w-[350px] 15i:w-[437px] border-[1px] border-[#5A4EAE] rounded-[30px]">
+                            <!-- image container -->
+                            <div class="bg-[#EFEDF7] h-[calc(100vw - 32px)] mm:h-[calc(100vw - 96px)] ml:h-[calc(100vw - 128px)] sm:h-[250px] xl:h-[300px] 14i:h-[350px] 15i:h-[437px] w-full rounded-t-[30px]">
+                                <img src="{{ blog.thumbnails.url }}" alt="{{ blog.title }}" class="rounded-t-[30px] h-full w-full">
+                            </div>
+                            <!-- description -->
+                            <div class="bg-[#FEFEFE] rounded-b-[30px] py-[20px] 15i:pt-[27px] 15i:pb-[38px] px-4 xl:px-6 15i:px-[34px]">
+                                <p class="text-[#262149] font-[500] text-[20px] leading-[24px] 14i:text-[28px]">
+                                    {{ blog.title }}
+                                </p>
+                                <p class="text-[#262149] pt-5 pb-[30px] text-xs lg:text-[16px] 14i:text-xl">
+                                    {{ blog.short_description }}
+                                </p>
+                                <p class="text-[#F76D4A] font-[500] text-sm lg:text-[18px] 14i:text-[20px] flex items-center gap-2">
+                                    <span>Read More</span> <img src="{% static 'assets/Arrow.png' %}" alt="arrow">
+                                </p>
+                            </div>
+                        </div>
+                    </a>
+                    {% endfor %}
+                </div>
+
+                <!-- Pagination controls -->
+                <div class="flex justify-center items-center gap-2 14i:gap-[17px] mt-12 14i:mt-20">
+
+                    <!-- Previous Page -->
+                    {% if page_obj.has_previous %}
+                    <a href="?page={{ page_obj.previous_page_number }}">
+                        <img src="{% static 'assets/left.png' %}" alt="Previous" class="cursor-pointer w-[30px] h-[30px] md:w-[42px] md:h-[42px]">
+                    </a>
+                    {% else %}
+                    <img src="{% static 'assets/left.png' %}" alt="Previous" class="w-[30px] h-[30px] md:w-[42px] md:h-[42px] opacity-50 cursor-not-allowed">
+                    {% endif %}
+
+                    <!-- Page Numbers -->
+                    {% for page_num in page_obj.paginator.page_range %}
+                    <a href="?page={{ page_num }}" class="w-[30px] leading-[30px] md:w-[53px] md:leading-[53px] text-center 15i:text-[24px] rounded-full
+                       {% if page_obj.number == page_num %}
+                       bg-[#262149] text-[#EFEDF7] border-[#262149]
+                       {% else %}
+                       bg-[#EFEDF7] text-[#262149] border-[#262149]
+                       {% endif %} border-[1px]">
+                        {{ page_num }}
+                    </a>
+                    {% endfor %}
+
+                    <!-- Next Page -->
+                    {% if page_obj.has_next %}
+                    <a href="?page={{ page_obj.next_page_number }}">
+                        <img src="{% static 'assets/right.png' %}" alt="Next" class="cursor-pointer w-[30px] h-[30px] md:w-[42px] md:h-[42px]">
+                    </a>
+                    {% else %}
+                    <img src="{% static 'assets/right.png' %}" alt="Next" class="w-[30px] h-[30px] md:w-[42px] md:h-[42px] opacity-50 cursor-not-allowed">
+                    {% endif %}
+
+                </div>
+            </div>
+        </section>
+{% endblock main %}

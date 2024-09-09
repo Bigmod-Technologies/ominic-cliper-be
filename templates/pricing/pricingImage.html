@@ -1,0 +1,239 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block main %}
+        <!-- =============================banner=============================== -->
+        <section class="max-w-[1510px] mx-auto">
+            <div
+                class="flex flex-col justify-center items-center gap-5 lg:gap-[30px] mt-8 md:mt-16 15i:mt-20 px-4 md:px-12">
+                <div>
+                    <p class=" text-center text-[#001210] text-xs md:text-[16px]">
+                        Home - Pricing Image
+                    </p>
+                    <p
+                        class="text-center text-[#001210] font-bold text-2xl mm:text-3xl md:text-5xl xl:text-7xl 15i:text-[88px] 15i:leading-[92px]">
+                        Pricing Image
+                    </p>
+                </div>
+                <p
+                    class=" text-center text-[#001210] text-xs md:text-sm xl:text-[18px] xl:leading-[22px] max-w-[774px] mx-auto">
+                    Welcome to Dot Clipping, your go-to photo-editing agency for all your image editing needs. At Dot
+                    Clipping, we understand Welcome to Dot Clipping, your go-to photo-editing agency for all your image
+                    editing needs
+                </p>
+                <a href="{% url 'order' %}" class="w-full flex justify-center">
+                    <button
+                        class="text-[#262149] font-[500] text-[20px] leading-[21px] py-4 lg:py-[22px] w-full sm:w-[346px] border-[1px] border-[#262149] rounded-[10px] transition-all ease-in-out duration-150 active:scale-95 hover:bg-[#262149] hover:text-white">
+                        Let’s Start With Free Trial
+                    </button>
+                </a>
+            </div>
+        </section>
+
+
+        <!-- ============================price================================== -->
+        <section class="px-4 py-8 md:px-8 md:py-12 lg:px-12 lg:py-16 14i:p-20 max-w-[1510px] mx-auto">
+            <div class="w-full grid grid-cols-1 sm:grid-cols-2 gap-4 md:gap-5">
+
+                <!-- product 1 -->
+                <div
+                    class="p-5 flex flex-col lg:flex-row items-center lg:items-start gap-4 md:gap-[30px] border-[#5A4EAE] border-[1px] rounded-[30px]">
+                    <!-- image -->
+                    <div class="h-[275px] w-full lg:w-[200px] lg:h-[200px] xl:w-[275px] xl:h-[275px] flex-shrink-0">
+                        <img src="{% static 'assets/Rectangle 1.png' %}" alt="img"
+                            class=" h-full w-full lg:w-[200px] lg:h-[200px] xl:w-[275px] xl:h-[275px]">
+                    </div>
+                    <!-- description -->
+                    <div class="flex flex-col items-center lg:items-start">
+                        <p class="text-[#262149] font-[500] text-xl xl:text-[28px] xl:leading-[30px]">
+                            Symmetrical Neck Joint
+                        </p>
+                        <p class="text-[#262149] xl:text-xl pt-3 xl:pt-5 pb-8 xl:pb-[60px] text-center lg:text-start">
+                            Sed ut perspiciatis unde omnis iste natus error voluptatema cusantium
+                            dolore mque.
+                        </p>
+
+                        <button
+                            class="text-[#F76D4A] border-[#F76D4A] border-[1px] rounded-[10px] px-8 py-[20px] text-[20px] leading-[21px] lg:text-xs xl:text-[20px] xl:leading-[21px] transition-all ease-in-out duration-150 hover:bg-[#F76D4A] hover:text-[#FCFCFC] active:scale-95">
+                            Per Image $0.29
+                        </button>
+                    </div>
+                </div>
+
+                <!-- product 2 -->
+                <div
+                    class="p-5 flex flex-col lg:flex-row items-center lg:items-start gap-4 md:gap-[30px] border-[#5A4EAE] border-[1px] rounded-[30px]">
+                    <!-- image -->
+                    <div class="h-[275px] w-full lg:w-[200px] lg:h-[200px] xl:w-[275px] xl:h-[275px] flex-shrink-0">
+                        <img src="{% static 'assets/Rectangle 2.png' %}" alt="img"
+                            class=" h-full w-full lg:w-[200px] lg:h-[200px] xl:w-[275px] xl:h-[275px]">
+                    </div>
+                    <!-- description -->
+                    <div class="flex flex-col items-center lg:items-start">
+                        <p class="text-[#262149] font-[500] text-xl xl:text-[28px] xl:leading-[30px]">
+                            Symmetrical Neck Joint
+                        </p>
+                        <p class="text-[#262149] xl:text-xl pt-3 xl:pt-5 pb-8 xl:pb-[60px] text-center lg:text-start">
+                            Sed ut perspiciatis unde omnis iste natus error voluptatema cusantium
+                            dolore mque.
+                        </p>
+
+                        <button
+                            class="text-[#F76D4A] border-[#F76D4A] border-[1px] rounded-[10px] px-8 py-[20px] text-[20px] leading-[21px] lg:text-xs xl:text-[20px] xl:leading-[21px] transition-all ease-in-out duration-150 hover:bg-[#F76D4A] hover:text-[#FCFCFC] active:scale-95">
+                            Per Image $0.29
+                        </button>
+                    </div>
+                </div>
+
+                <!-- product 3 -->
+                <div
+                    class="p-5 flex flex-col lg:flex-row items-center lg:items-start gap-4 md:gap-[30px] border-[#5A4EAE] border-[1px] rounded-[30px]">
+                    <!-- image -->
+                    <div class="h-[275px] w-full lg:w-[200px] lg:h-[200px] xl:w-[275px] xl:h-[275px] flex-shrink-0">
+                        <img src="{% static 'assets/Rectangle 3.png' %}" alt="img"
+                            class=" h-full w-full lg:w-[200px] lg:h-[200px] xl:w-[275px] xl:h-[275px]">
+                    </div>
+                    <!-- description -->
+                    <div class="flex flex-col items-center lg:items-start">
+                        <p class="text-[#262149] font-[500] text-xl xl:text-[28px] xl:leading-[30px]">
+                            Symmetrical Neck Joint
+                        </p>
+                        <p class="text-[#262149] xl:text-xl pt-3 xl:pt-5 pb-8 xl:pb-[60px] text-center lg:text-start">
+                            Sed ut perspiciatis unde omnis iste natus error voluptatema cusantium
+                            dolore mque.
+                        </p>
+
+                        <button
+                            class="text-[#F76D4A] border-[#F76D4A] border-[1px] rounded-[10px] px-8 py-[20px] text-[20px] leading-[21px] lg:text-xs xl:text-[20px] xl:leading-[21px] transition-all ease-in-out duration-150 hover:bg-[#F76D4A] hover:text-[#FCFCFC] active:scale-95">
+                            Per Image $0.29
+                        </button>
+                    </div>
+                </div>
+
+                <!-- product 4 -->
+                <div
+                    class="p-5 flex flex-col lg:flex-row items-center lg:items-start gap-4 md:gap-[30px] border-[#5A4EAE] border-[1px] rounded-[30px]">
+                    <!-- image -->
+                    <div class="h-[275px] w-full lg:w-[200px] lg:h-[200px] xl:w-[275px] xl:h-[275px] flex-shrink-0">
+                        <img src="{% static 'assets/Rectangle 4.png' %}" alt="img"
+                            class=" h-full w-full lg:w-[200px] lg:h-[200px] xl:w-[275px] xl:h-[275px]">
+                    </div>
+                    <!-- description -->
+                    <div class="flex flex-col items-center lg:items-start">
+                        <p class="text-[#262149] font-[500] text-xl xl:text-[28px] xl:leading-[30px]">
+                            Symmetrical Neck Joint
+                        </p>
+                        <p class="text-[#262149] xl:text-xl pt-3 xl:pt-5 pb-8 xl:pb-[60px] text-center lg:text-start">
+                            Sed ut perspiciatis unde omnis iste natus error voluptatema cusantium
+                            dolore mque.
+                        </p>
+
+                        <button
+                            class="text-[#F76D4A] border-[#F76D4A] border-[1px] rounded-[10px] px-8 py-[20px] text-[20px] leading-[21px] lg:text-xs xl:text-[20px] xl:leading-[21px] transition-all ease-in-out duration-150 hover:bg-[#F76D4A] hover:text-[#FCFCFC] active:scale-95">
+                            Per Image $0.29
+                        </button>
+                    </div>
+                </div>
+
+                <!-- product 5 -->
+                <div
+                    class="p-5 flex flex-col lg:flex-row items-center lg:items-start gap-4 md:gap-[30px] border-[#5A4EAE] border-[1px] rounded-[30px]">
+                    <!-- image -->
+                    <div class="h-[275px] w-full lg:w-[200px] lg:h-[200px] xl:w-[275px] xl:h-[275px] flex-shrink-0">
+                        <img src="{% static 'assets/Rectangle 1.png' %}" alt="img"
+                            class=" h-full w-full lg:w-[200px] lg:h-[200px] xl:w-[275px] xl:h-[275px]">
+                    </div>
+                    <!-- description -->
+                    <div class="flex flex-col items-center lg:items-start">
+                        <p class="text-[#262149] font-[500] text-xl xl:text-[28px] xl:leading-[30px]">
+                            Symmetrical Neck Joint
+                        </p>
+                        <p class="text-[#262149] xl:text-xl pt-3 xl:pt-5 pb-8 xl:pb-[60px] text-center lg:text-start">
+                            Sed ut perspiciatis unde omnis iste natus error voluptatema cusantium
+                            dolore mque.
+                        </p>
+
+                        <button
+                            class="text-[#F76D4A] border-[#F76D4A] border-[1px] rounded-[10px] px-8 py-[20px] text-[20px] leading-[21px] lg:text-xs xl:text-[20px] xl:leading-[21px] transition-all ease-in-out duration-150 hover:bg-[#F76D4A] hover:text-[#FCFCFC] active:scale-95">
+                            Per Image $0.29
+                        </button>
+                    </div>
+                </div>
+
+                <!-- product 6 -->
+                <div
+                    class="p-5 flex flex-col lg:flex-row items-center lg:items-start gap-4 md:gap-[30px] border-[#5A4EAE] border-[1px] rounded-[30px]">
+                    <!-- image -->
+                    <div class="h-[275px] w-full lg:w-[200px] lg:h-[200px] xl:w-[275px] xl:h-[275px] flex-shrink-0">
+                        <img src="{% static 'assets/Rectangle 2.png' %}" alt="img"
+                            class=" h-full w-full lg:w-[200px] lg:h-[200px] xl:w-[275px] xl:h-[275px]">
+                    </div>
+                    <!-- description -->
+                    <div class="flex flex-col items-center lg:items-start">
+                        <p class="text-[#262149] font-[500] text-xl xl:text-[28px] xl:leading-[30px]">
+                            Symmetrical Neck Joint
+                        </p>
+                        <p class="text-[#262149] xl:text-xl pt-3 xl:pt-5 pb-8 xl:pb-[60px] text-center lg:text-start">
+                            Sed ut perspiciatis unde omnis iste natus error voluptatema cusantium
+                            dolore mque.
+                        </p>
+
+                        <button
+                            class="text-[#F76D4A] border-[#F76D4A] border-[1px] rounded-[10px] px-8 py-[20px] text-[20px] leading-[21px] lg:text-xs xl:text-[20px] xl:leading-[21px] transition-all ease-in-out duration-150 hover:bg-[#F76D4A] hover:text-[#FCFCFC] active:scale-95">
+                            Per Image $0.29
+                        </button>
+                    </div>
+                </div>
+
+                <!-- product 7 -->
+                <div
+                    class="p-5 flex flex-col lg:flex-row items-center lg:items-start gap-4 md:gap-[30px] border-[#5A4EAE] border-[1px] rounded-[30px]">
+                    <!-- image -->
+                    <div class="h-[275px] w-full lg:w-[200px] lg:h-[200px] xl:w-[275px] xl:h-[275px] flex-shrink-0">
+                        <img src="{% static 'assets/Rectangle 3.png' %}" alt="img"
+                            class=" h-full w-full lg:w-[200px] lg:h-[200px] xl:w-[275px] xl:h-[275px]">
+                    </div>
+                    <!-- description -->
+                    <div class="flex flex-col items-center lg:items-start">
+                        <p class="text-[#262149] font-[500] text-xl xl:text-[28px] xl:leading-[30px]">
+                            Symmetrical Neck Joint
+                        </p>
+                        <p class="text-[#262149] xl:text-xl pt-3 xl:pt-5 pb-8 xl:pb-[60px] text-center lg:text-start">
+                            Sed ut perspiciatis unde omnis iste natus error voluptatema cusantium
+                            dolore mque.
+                        </p>
+
+                        <button
+                            class="text-[#F76D4A] border-[#F76D4A] border-[1px] rounded-[10px] px-8 py-[20px] text-[20px] leading-[21px] lg:text-xs xl:text-[20px] xl:leading-[21px] transition-all ease-in-out duration-150 hover:bg-[#F76D4A] hover:text-[#FCFCFC] active:scale-95">
+                            Per Image $0.29
+                        </button>
+                    </div>
+                </div>
+
+                <!-- product 8 -->
+                <div
+                    class="p-5 flex flex-col lg:flex-row items-center lg:items-start gap-4 md:gap-[30px] border-[#5A4EAE] border-[1px] rounded-[30px]">
+                    <!-- image -->
+                    <div class="h-[275px] w-full lg:w-[200px] lg:h-[200px] xl:w-[275px] xl:h-[275px] flex-shrink-0">
+                        <img src="{% static 'assets/Rectangle 4.png' %}" alt="img"
+                            class=" h-full w-full lg:w-[200px] lg:h-[200px] xl:w-[275px] xl:h-[275px]">
+                    </div>
+                    <!-- description -->
+                    <div class="flex flex-col items-center lg:items-start">
+                        <p class="text-[#262149] font-[500] text-xl xl:text-[28px] xl:leading-[30px]">
+                            Symmetrical Neck Joint
+                        </p>
+                        <p class="text-[#262149] xl:text-xl pt-3 xl:pt-5 pb-8 xl:pb-[60px] text-center lg:text-start">
+                            Sed ut perspiciatis unde omnis iste natus error voluptatema cusantium
+                            dolore mque.
+                        </p>
+
+                        <button
+                            class="text-[#F76D4A] border-[#F76D4A] border-[1px] rounded-[10px] px-8 py-[20px] text-[20px] leading-[21px] lg:text-xs xl:text-[20px] xl:leading-[21px] transition-all ease-in-out duration-150 hover:bg-[#F76D4A] hover:text-[#FCFCFC] active:scale-95">
+                            Per Image $0.29
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+{% endblock main %}
