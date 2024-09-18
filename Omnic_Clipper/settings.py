@@ -11,8 +11,12 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'django-insecure-r6knh9msy&e0%3n+h-lp+k^&9=zn04o8&5&zforys4q6jxlj49'
 
+from dotenv import load_dotenv
+
+load_dotenv()
+
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False if os.getenv("DEBUG") == "False" else True
 
 ALLOWED_HOSTS = ['*']
 
@@ -35,6 +39,7 @@ INSTALLED_APPS = [
     'apps.webApp',
     'apps.service',
     'apps.blog',
+    'apps.testimonial',
 ]
 
 MIDDLEWARE = [
@@ -48,6 +53,9 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'Omnic_Clipper.urls'
+
+
+
 
 TEMPLATES = [
     {
@@ -115,14 +123,19 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
 STATIC_URL = 'static/'
 STATICFILES_DIRS = [BASE_DIR / 'static']
-# STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
-STATIC_ROOT = "/home/omniccli/public_html/static/"
+if DEBUG:
+    STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
+else:
+    STATIC_ROOT = "/home/omniccli/public_html/static/"
 
 
 
 # Media files
 MEDIA_URL = 'media/'
-MEDIA_ROOT = BASE_DIR / 'media'
+if DEBUG:
+    MEDIA_ROOT = BASE_DIR / 'media'
+else:
+    MEDIA_ROOT = "/home/omniccli/public_html/media/"
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
