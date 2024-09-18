@@ -128,7 +128,7 @@
     >
       {% for service in service|slice:':6' %}
       <!-- service card -->
-      <a href="{% url 'service_details' service.pk %}">
+      <a href="{% url 'service_details' service.service_slug %}">
         <div
           class="w-full sm:w-[250px] xl:w-[300px] 14i:w-[350px] 15i:w-[437px]"
         >
