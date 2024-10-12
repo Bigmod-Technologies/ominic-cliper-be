@@ -1,6 +1,7 @@
 from django.shortcuts import render, get_object_or_404
 from apps.service.models import Service
 from apps.testimonial.models import ClientTestimonial
+from apps.webApp.models import PricingImage
 
 
 # Create your views here.
@@ -49,5 +50,6 @@ def order(request):
 
 
 def pricingImage(request):
-    context = {"title": "Pricing Image", "show_contact_section": True}
+    pricingImage = PricingImage.objects.all()
+    context = {"title": "Pricing Image","show_contact_section": True, 'pricingImage': pricingImage}
     return render(request, "pricing/pricingImage.html", context)

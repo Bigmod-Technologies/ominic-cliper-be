@@ -15,19 +15,23 @@ class Tag(models.Model):
 
 class Blog(models.Model):
     STATUS_CHOICES = [
-        ('draft', 'Draft'),
-        ('published', 'Published'),
+        ("draft", "Draft"),
+        ("published", "Published"),
     ]
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     title = models.CharField(max_length=100)
-    blog_slug = AutoSlugField(populate_from='title', unique=True, null=True, default=None)
-    status = models.CharField(max_length=10, choices=STATUS_CHOICES, default='draft')
+    blog_slug = AutoSlugField(
+        populate_from="title", unique=True, null=True, default=None
+    )
+    status = models.CharField(max_length=10, choices=STATUS_CHOICES, default="draft")
     upload_time = models.DateTimeField(auto_now_add=True)
     writer = models.ForeignKey(User, on_delete=models.CASCADE)
     short_description = models.TextField()
     tag = models.ManyToManyField(Tag)
-    thumbnails = ResizedImageField(upload_to="blog/%Y/%m/%d", quality=75, force_format='WEBP')
-    blog_details = CKEditor5Field('Text', config_name='extends')
+    thumbnails = ResizedImageField(
+        upload_to="Blog/thumbnails", quality=75, force_format="WEBP"
+    )
+    blog_details = CKEditor5Field("Text", config_name="extends")
     updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):

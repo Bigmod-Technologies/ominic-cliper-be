@@ -1,6 +1,10 @@
 from django.urls import path, include
+from rest_framework.routers import DefaultRouter
 from . import views
-urlpatterns = [
-    path('', views.blog, name='blog'),
-    path('<slug:slug>/', views.blogDetails, name='blog_details'),
-]
+
+router = DefaultRouter()
+
+router.register("tags", views.BlogTagView, basename="blog_tag")
+router.register("content", views.BlogView, basename="blog")
+
+urlpatterns = [path("", include(router.urls))]
