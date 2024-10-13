@@ -100,6 +100,7 @@ class BlogView(viewsets.GenericViewSet):
 
     filterset_fields = {
         "title": ["exact"],
+        "blog_slug": ["exact"],
     }
     search_fields = ["title"]
     ordering_fields = ["upload_time"]
