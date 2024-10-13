@@ -42,6 +42,7 @@ class ServiceView(viewsets.GenericViewSet):
 
     filterset_fields = {
         "service_title": ["exact"],
+        "service_slug": ["exact"],
     }
     search_fields = ["service_title"]
     ordering_fields = ["created_at"]
