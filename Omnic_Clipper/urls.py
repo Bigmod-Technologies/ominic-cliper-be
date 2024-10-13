@@ -15,16 +15,11 @@ urlpatterns = [
     path("blog/", include("apps.blog.urls")),
     path("service/", include("apps.service.urls")),
     path("testimonial/", include("apps.testimonial.urls")),
+    path("order/", include("apps.order.urls")),
     # Optional UI:
     path("schema/", SpectacularAPIView.as_view(), name="schema"),
     path("", SpectacularSwaggerView.as_view(url_name="schema"), name="swagger-ui"),
     path("doc/", SpectacularRedocView.as_view(url_name="schema"), name="redoc"),
-    # webApp
-    # path('', include('apps.webApp.urls')),
-    # #Service app urls
-    # path('service/', include('apps.service.urls')),
-    # #CKeditor
-    # path("ckeditor5/", include('django_ckeditor_5.urls')),
 ]
 
 if settings.DEBUG:

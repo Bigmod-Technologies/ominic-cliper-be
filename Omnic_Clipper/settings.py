@@ -46,10 +46,13 @@ INSTALLED_APPS = [
     # dependencies
     "ckeditor",
     # Custom apps
-    "apps.webApp",
+    # "apps.webApp",
     "apps.service",
     "apps.blog",
     "apps.testimonial",
+    "apps.product",
+    "apps.crm",
+    "apps.order",
 ]
 
 MIDDLEWARE = [
@@ -225,4 +228,3 @@ SPECTACULAR_SETTINGS = {
         "displayOperationId": True,
     },
 }
-
