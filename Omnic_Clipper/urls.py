@@ -14,6 +14,7 @@ urlpatterns = [
     path("auth/", include("apps.auth0.urls")),
     path("blog/", include("apps.blog.urls")),
     path("service/", include("apps.service.urls")),
+    path("testimonial/", include("apps.testimonial.urls")),
     # Optional UI:
     path("schema/", SpectacularAPIView.as_view(), name="schema"),
     path("", SpectacularSwaggerView.as_view(url_name="schema"), name="swagger-ui"),
