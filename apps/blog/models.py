@@ -1,7 +1,7 @@
 from django.contrib.auth.models import User
 from django.db import models
 from django_resized import ResizedImageField
-from django_ckeditor_5.fields import CKEditor5Field
+from ckeditor.fields import RichTextField
 from autoslug import AutoSlugField
 import uuid
 
@@ -31,7 +31,7 @@ class Blog(models.Model):
     thumbnails = ResizedImageField(
         upload_to="Blog/thumbnails", quality=75, force_format="WEBP"
     )
-    blog_details = CKEditor5Field("Text", config_name="extends")
+    blog_details = RichTextField()
     updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
