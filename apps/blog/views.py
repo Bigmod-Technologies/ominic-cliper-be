@@ -34,7 +34,7 @@ class DefaultPagination(LimitOffsetPagination):
 # Create your views here.
 
 
-@extend_schema(tags=["Blog tag"])
+@extend_schema(tags=["Blog Tag"])
 class BlogTagView(viewsets.GenericViewSet):
     permission_classes = [IsAuthenticated]
     serializer_class = BlogTagSerializers

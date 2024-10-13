@@ -88,12 +88,20 @@ WSGI_APPLICATION = "Omnic_Clipper.wsgi.application"
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
-DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
+if DEBUG:
+    DATABASES = {
+        "default": {
+            "ENGINE": "django.db.backends.sqlite3",
+            "NAME": BASE_DIR / "db.sqlite3",
+        }
     }
-}
+else:
+    DATABASES = {
+        "default": {
+            "ENGINE": "django.db.backends.sqlite3",
+            "NAME": BASE_DIR / "db_prod.sqlite3",
+        }
+    }
 
 
 # Password validation
@@ -196,7 +204,7 @@ CORS_ORIGIN_ALLOW_ALL = True
 SPECTACULAR_SETTINGS = {
     "TITLE": "Ominic Clipper | API Documentation",
     "DESCRIPTION": "documentations vist /doc",
-    "VERSION": "0.0.27-alpha",
+    "VERSION": "0.0.1-alpha",
     "SERVE_INCLUDE_SCHEMA": False,
     "SCHEMA_PATH_PREFIX_TRIM": True,
     # 'SERVE_PUBLIC': False,
@@ -218,14 +226,3 @@ SPECTACULAR_SETTINGS = {
     },
 }
 
-
-# CKeditor5 config
-
-customColorPalette = [
-    {"color": "hsl(4, 90%, 58%)", "label": "Red"},
-    {"color": "hsl(340, 82%, 52%)", "label": "Pink"},
-    {"color": "hsl(291, 64%, 42%)", "label": "Purple"},
-    {"color": "hsl(262, 52%, 47%)", "label": "Deep Purple"},
-    {"color": "hsl(231, 48%, 48%)", "label": "Indigo"},
-    {"color": "hsl(207, 90%, 54%)", "label": "Blue"},
-]
