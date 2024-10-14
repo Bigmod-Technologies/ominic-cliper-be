@@ -82,9 +82,7 @@ class ClientTestimonialView(viewsets.GenericViewSet):
         return Response(serializer.data, status=status.HTTP_202_ACCEPTED)
 
     def destroy(self, request, pk=None):
-        instance = self.get_object()
-        instance.user.is_active = False
-        instance.user.save()
+        self.get_object().delete()
         return Response(
             {"status": "Removed Permanently"}, status=status.HTTP_204_NO_CONTENT
         )

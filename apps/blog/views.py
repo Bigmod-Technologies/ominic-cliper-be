@@ -22,6 +22,8 @@ from .models import Blog, Tag
 from drf_standardized_errors.openapi import AutoSchema
 from drf_standardized_errors.handler import exception_handler
 from drf_spectacular.utils import extend_schema
+from rest_framework.decorators import action
+from django.shortcuts import get_object_or_404
 
 
 class DefaultPagination(LimitOffsetPagination):
@@ -82,9 +84,7 @@ class BlogTagView(viewsets.GenericViewSet):
         return Response(serializer.data, status=status.HTTP_202_ACCEPTED)
 
     def destroy(self, request, pk=None):
-        instance = self.get_object()
-        instance.user.is_active = False
-        instance.user.save()
+        self.get_object().delete()
         return Response(
             {"status": "Removed Permanently"}, status=status.HTTP_204_NO_CONTENT
         )
@@ -144,9 +144,18 @@ class BlogView(viewsets.GenericViewSet):
         return Response(serializer.data, status=status.HTTP_202_ACCEPTED)
 
     def destroy(self, request, pk=None):
-        instance = self.get_object()
-        instance.user.is_active = False
-        instance.user.save()
+        self.get_object().delete()
         return Response(
             {"status": "Removed Permanently"}, status=status.HTTP_204_NO_CONTENT
         )
+
+    @action(
+        detail=False,
+        methods=["GET"],
+        url_path="slug/(?P<blog_slug>[^/.]+)",
+    )
+    def slug(self, request, blog_slug=None):
+        if request.method == "GET":
+            blog = get_object_or_404(Blog, blog_slug=blog_slug)
+            serializer = self.get_serializer(blog)
+            return Response(serializer.data, status=status.HTTP_200_OK)

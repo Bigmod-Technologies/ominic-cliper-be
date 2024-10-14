@@ -22,6 +22,8 @@ from .models import Service
 from drf_standardized_errors.openapi import AutoSchema
 from drf_standardized_errors.handler import exception_handler
 from drf_spectacular.utils import extend_schema
+from rest_framework.decorators import action
+from django.shortcuts import get_object_or_404
 
 
 class DefaultPagination(LimitOffsetPagination):
@@ -81,9 +83,18 @@ class ServiceView(viewsets.GenericViewSet):
         return Response(serializer.data, status=status.HTTP_202_ACCEPTED)
 
     def destroy(self, request, pk=None):
-        instance = self.get_object()
-        instance.user.is_active = False
-        instance.user.save()
+        self.get_object().delete()
         return Response(
             {"status": "Removed Permanently"}, status=status.HTTP_204_NO_CONTENT
         )
+
+    @action(
+        detail=False,
+        methods=["GET"],
+        url_path="slug/(?P<service_slug>[^/.]+)",
+    )
+    def slug(self, request, service_slug=None):
+        if request.method == "GET":
+            service = get_object_or_404(Service, service_slug=service_slug)
+            serializer = self.get_serializer(service)
+            return Response(serializer.data, status=status.HTTP_200_OK)

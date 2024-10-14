@@ -25,3 +25,30 @@ class Price(models.Model):
     status = models.BooleanField(default=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+
+
+class Sample(models.Model):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    title = models.CharField(max_length=255)
+    description = models.TextField()
+    image1 = ResizedImageField(
+        upload_to="Sample/image1/", quality=75, force_format="WEBP"
+    )
+    image2 = ResizedImageField(
+        upload_to="Sample/image2/", quality=75, force_format="WEBP"
+    )
+    status = models.BooleanField(default=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+
+class SmapleMedia(models.Model):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    sample = models.ForeignKey(
+        Sample, related_name="sample_media", on_delete=models.CASCADE
+    )
+    media = ResizedImageField(
+        upload_to="SmapleMedia/media/", quality=75, force_format="WEBP"
+    )
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)

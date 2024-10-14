@@ -12,16 +12,18 @@ from rest_framework.filters import SearchFilter, OrderingFilter
 from django_filters.rest_framework import DjangoFilterBackend
 
 # serializer
-from .serializers import PriceSerializers
+from .serializers import PriceSerializers, SampleSerializers, SmapleMediaSerializers
 
 # model
-from .models import Price
+from .models import Price, Sample, SmapleMedia
 
 
 # utils
 from drf_standardized_errors.openapi import AutoSchema
 from drf_standardized_errors.handler import exception_handler
 from drf_spectacular.utils import extend_schema
+from rest_framework.decorators import action
+from django.shortcuts import get_object_or_404
 
 
 class DefaultPagination(LimitOffsetPagination):
@@ -83,9 +85,111 @@ class PriceView(viewsets.GenericViewSet):
         return Response(serializer.data, status=status.HTTP_202_ACCEPTED)
 
     def destroy(self, request, pk=None):
-        instance = self.get_object()
-        instance.user.is_active = False
-        instance.user.save()
+        self.get_object().delete()
         return Response(
             {"status": "Removed Permanently"}, status=status.HTTP_204_NO_CONTENT
         )
+
+
+@extend_schema(tags=["Sample"])
+class SampleView(viewsets.GenericViewSet):
+    permission_classes = [IsAuthenticated]
+    serializer_class = SampleSerializers
+    queryset = Sample.objects.all()
+    pagination_class = DefaultPagination
+    filter_backends = [SearchFilter, DjangoFilterBackend, OrderingFilter]
+
+    filterset_fields = {
+        "title": ["exact"],
+    }
+    search_fields = ["title"]
+    ordering_fields = ["created_at"]
+
+    schema = AutoSchema()
+
+    def get_exception_handler(self):
+        return exception_handler
+
+    def get_permissions(self):
+        if self.request.method == "GET":
+            self.permission_classes = []
+        return super().get_permissions()
+
+    def list(self, request):
+        page = self.paginate_queryset(self.filter_queryset(self.get_queryset()))
+        serializer = self.get_serializer(page, many=True)
+        return self.get_paginated_response(serializer.data)
+
+    def create(self, request):
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
+
+    def retrieve(self, request, pk=None):
+        serializer = self.get_serializer(self.get_object())
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
+    def partial_update(self, request, pk=None):
+        serializer = self.get_serializer(
+            self.get_object(), data=request.data, partial=True
+        )
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        return Response(serializer.data, status=status.HTTP_202_ACCEPTED)
+
+    def destroy(self, request, pk=None):
+        self.get_object().delete()
+        return Response(
+            {"status": "Removed Permanently"}, status=status.HTTP_204_NO_CONTENT
+        )
+
+    @action(
+        detail=True,
+        methods=["GET", "POST"],
+        serializer_class=SmapleMediaSerializers,
+        queryset=SmapleMedia.objects.all(),
+        filterset_fields={
+            "sample": ["exact"],
+        },
+        url_path="media",
+    )
+    def media(self, request, pk=None):
+        if request.method == "GET":
+            sample = get_object_or_404(Sample, id=pk)
+            query_set = self.get_queryset().filter(sample=sample)
+            page = self.paginate_queryset(self.filter_queryset(query_set))
+            serializer = self.get_serializer(page, many=True)
+            return self.get_paginated_response(serializer.data)
+
+        elif request.method == "POST":
+            sample = get_object_or_404(Sample, id=pk)
+            serializer = self.get_serializer(data=request.data)
+            serializer.is_valid(raise_exception=True)
+            serializer.save(sample=sample)
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+
+    @action(
+        detail=False,
+        methods=["PATCH", "DELETE"],
+        serializer_class=SmapleMediaSerializers,
+        queryset=SmapleMedia.objects.all(),
+        filterset_fields={
+            "sample": ["exact"],
+        },
+        url_path="media/(?P<pk>[^/.]+)",
+    )
+    def media_details(self, request, pk=None):
+        if request.method == "PATCH":
+            serializer = self.get_serializer(
+                self.get_object(), data=request.data, partial=True
+            )
+            serializer.is_valid(raise_exception=True)
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_202_ACCEPTED)
+
+        elif request.method == "DELETE":
+            self.get_object().delete()
+            return Response(
+                {"status": "Removed Permanently"}, status=status.HTTP_204_NO_CONTENT
+            )
