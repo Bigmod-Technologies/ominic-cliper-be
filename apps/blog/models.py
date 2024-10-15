@@ -27,7 +27,8 @@ class Blog(models.Model):
     upload_time = models.DateTimeField(auto_now_add=True)
     writer = models.ForeignKey(User, on_delete=models.CASCADE)
     short_description = models.TextField()
-    tag = models.ManyToManyField(Tag)
+    # tag = models.ManyToManyField(Tag)
+    tag = models.CharField(null=True, max_length=255)
     thumbnails = ResizedImageField(
         upload_to="Blog/thumbnails", quality=75, force_format="WEBP"
     )
