@@ -38,7 +38,7 @@ class WriterSerializers(serializers.ModelSerializer):
 
 class BlogDetailsSerializers(serializers.ModelSerializer):
     writer = WriterSerializers()
-    tag = BlogTagSerializers(many=True)
+ 
 
     class Meta:
         model = Blog
