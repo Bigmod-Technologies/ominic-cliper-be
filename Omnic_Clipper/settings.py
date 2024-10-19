@@ -53,6 +53,7 @@ INSTALLED_APPS = [
     "apps.product",
     "apps.crm",
     "apps.order",
+    "apps.cms",
 ]
 
 MIDDLEWARE = [
