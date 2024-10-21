@@ -12,5 +12,7 @@ class PageContentSerializer(serializers.ModelSerializer):
         fields = "__all__"
 
     def create(self, validated_data):
-
-        return PageContent.objects.get_or_create(key=validated_data.get("key"))
+        data, created = PageContent.objects.get_or_create(key=validated_data.get("key"))
+        data.image = validated_data.get("image")
+        data.save()
+        return data
