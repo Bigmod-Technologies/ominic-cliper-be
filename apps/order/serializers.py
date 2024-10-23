@@ -14,8 +14,9 @@ class OrderSerializers(serializers.ModelSerializer):
             "name": {"required": True},
             "email": {"required": True},
             "url": {"required": False},
+            "file_link": {"required": False},
             "type": {"required": True},
-            "appointment": {"required": True},
+            "duration": {"required": False},
             "service": {"required": True},
-            "message": {"required": True},
+            "message": {"required": False},
         }

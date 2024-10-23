@@ -11,9 +11,9 @@ class Order(models.Model):
     url = models.CharField(null=True, max_length=255, blank=True)
     file_link = models.URLField(null=True)
     type = models.CharField(max_length=150)
-    appointment = models.DateField()
+    duration = models.CharField(null=True, max_length=255)
     service = models.CharField(max_length=255)
-    message = models.TextField()
+    message = models.TextField(null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
