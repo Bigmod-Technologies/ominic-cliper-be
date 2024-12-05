@@ -28,7 +28,7 @@ class Blog(models.Model):
     writer = models.ForeignKey(User, on_delete=models.CASCADE)
     short_description = models.TextField()
     # tag = models.ManyToManyField(Tag)
-    tag = models.CharField(null=True, max_length=255)
+    tag = models.TextField(null=True)
     thumbnails = ResizedImageField(
         upload_to="Blog/thumbnails", quality=75, force_format="WEBP"
     )

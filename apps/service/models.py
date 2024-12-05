@@ -22,7 +22,7 @@ class Service(models.Model):
     cover_image = ResizedImageField(
         upload_to="Service/cover_image/", quality=75, force_format="WEBP"
     )
-    keywords = models.CharField(max_length=500, default='')
+    keywords = models.TextField(default='')
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 

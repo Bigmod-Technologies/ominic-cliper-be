@@ -5,6 +5,7 @@ from . import views
 router = DefaultRouter()
 
 router.register("content", views.PageContentView, basename="content")
+router.register("metadata", views.MetadataView, basename="metadata")
 
 
 urlpatterns = [path("", include(router.urls))]

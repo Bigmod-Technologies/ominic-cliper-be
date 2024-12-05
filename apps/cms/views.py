@@ -12,10 +12,10 @@ from rest_framework.filters import SearchFilter, OrderingFilter
 from django_filters.rest_framework import DjangoFilterBackend
 
 # serializer
-from .serializers import PageContentSerializer
+from .serializers import PageContentSerializer, MetadataSerializer
 
 # model
-from .models import PageContent
+from .models import PageContent, Metadata
 
 
 # utils
@@ -75,9 +75,43 @@ class PageContentView(viewsets.GenericViewSet):
         serializer = self.get_serializer(self.get_object())
         return Response(serializer.data, status=status.HTTP_200_OK)
 
-
     def destroy(self, request, pk=None):
         self.get_object().delete()
         return Response(
             {"status": "Removed Permanently"}, status=status.HTTP_204_NO_CONTENT
         )
+
+
+@extend_schema(tags=["Metadata"])
+class MetadataView(viewsets.GenericViewSet):
+    permission_classes = [IsAuthenticated]
+    serializer_class = MetadataSerializer
+    queryset = Metadata.objects.all()
+    pagination_class = DefaultPagination
+    filter_backends = [SearchFilter, DjangoFilterBackend, OrderingFilter]
+
+    filterset_fields = {
+        "key": ["exact"],
+    }
+    search_fields = ["key"]
+    ordering_fields = ["id"]
+
+    schema = AutoSchema()
+
+    def get_exception_handler(self):
+        return exception_handler
+
+    def get_permissions(self):
+        if self.request.method == "GET":
+            self.permission_classes = []
+        return super().get_permissions()
+
+    def list(self, request):
+        serializer = self.get_serializer(self.filter_queryset(self.get_queryset()), many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
+    def create(self, request):
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
