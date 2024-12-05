@@ -208,7 +208,7 @@ CORS_ORIGIN_ALLOW_ALL = True
 SPECTACULAR_SETTINGS = {
     "TITLE": "Ominic Clipper | API Documentation",
     "DESCRIPTION": "documentations vist /doc",
-    "VERSION": "0.0.2-alpha",
+    "VERSION": "0.0.1",
     "SERVE_INCLUDE_SCHEMA": False,
     "SCHEMA_PATH_PREFIX_TRIM": True,
     # 'SERVE_PUBLIC': False,
