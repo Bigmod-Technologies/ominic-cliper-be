@@ -17,4 +17,5 @@ class ServiceSerializers(serializers.ModelSerializer):
             "short_description": {"required": True},
             "details_text_editor": {"required": True},
             "cover_image": {"required": True},
+            
         }
