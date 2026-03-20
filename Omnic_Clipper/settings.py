@@ -1,6 +1,7 @@
 from pathlib import Path
 import os
 from datetime import timedelta
+from urllib.parse import parse_qs, urlparse
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -10,11 +11,22 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = "django-insecure-r6knh9msy&e0%3n+h-lp+k^&9=zn04o8&5&zforys4q6jxlj49"
+SECRET_KEY = os.getenv("SECRET_KEY", "")
 
 from dotenv import load_dotenv
 
-load_dotenv()
+load_dotenv(dotenv_path=BASE_DIR / ".env")
+
+def env_bool(key: str, default: bool = False) -> bool:
+    """
+    Read a boolean from environment variables.
+
+    Treats common truthy strings as True; everything else falls back to False/default.
+    """
+    val = os.getenv(key)
+    if val is None:
+        return default
+    return val.strip().lower() in ("1", "true", "yes", "y", "on")
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False if os.getenv("DEBUG") == "False" else True
@@ -54,6 +66,7 @@ INSTALLED_APPS = [
     "apps.crm",
     "apps.order",
     "apps.cms",
+    "storages",
 ]
 
 MIDDLEWARE = [
@@ -92,18 +105,30 @@ WSGI_APPLICATION = "Omnic_Clipper.wsgi.application"
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
-if DEBUG:
+DATABASE_URL = os.getenv("DATABASE_URL")
+
+if DATABASE_URL and not DEBUG:
+    # Example URL:
+    # postgresql://user:pass@host:5432/dbname?sslmode=require&channel_binding=require
+    parsed = urlparse(DATABASE_URL)
+    query = {k: v[0] for k, v in parse_qs(parsed.query).items()}
     DATABASES = {
         "default": {
-            "ENGINE": "django.db.backends.sqlite3",
-            "NAME": BASE_DIR / "db.sqlite3",
+            "ENGINE": "django.db.backends.postgresql",
+            "NAME": parsed.path.lstrip("/") or "",
+            "USER": parsed.username or "",
+            "PASSWORD": parsed.password or "",
+            "HOST": parsed.hostname or "",
+            "PORT": str(parsed.port) if parsed.port else "",
+            # Pass through libpq connection options from the URL.
+            "OPTIONS": query,
         }
     }
 else:
     DATABASES = {
         "default": {
             "ENGINE": "django.db.backends.sqlite3",
-            "NAME": BASE_DIR / "db_prod.sqlite3",
+            "NAME": BASE_DIR / "db.sqlite3",
         }
     }
 
@@ -181,23 +206,38 @@ USE_I18N = True
 USE_TZ = True
 
 
+DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+
+AWS_ACCESS_KEY_ID = os.getenv("AWS_ACCESS_KEY_ID", "")
+AWS_SECRET_ACCESS_KEY = os.getenv("AWS_SECRET_ACCESS_KEY", "")
+
+AWS_STORAGE_BUCKET_NAME = os.getenv("AWS_STORAGE_BUCKET_NAME", "")
+
+AWS_S3_ENDPOINT_URL = os.getenv("AWS_S3_ENDPOINT_URL", "")
+AWS_S3_REGION_NAME = os.getenv("AWS_S3_REGION_NAME", "us-west-1")  # your region
+
+AWS_S3_ADDRESSING_STYLE = os.getenv("AWS_S3_ADDRESSING_STYLE", "virtual")
+AWS_S3_SIGNATURE_VERSION = os.getenv("AWS_S3_SIGNATURE_VERSION", "s3v4")
+AWS_QUERYSTRING_AUTH = env_bool("AWS_QUERYSTRING_AUTH", False)  # optional (public URLs)
+
+
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
 STATIC_URL = "static/"
 STATICFILES_DIRS = [BASE_DIR / "static"]
-if DEBUG:
-    STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
-else:
-    STATIC_ROOT = "/home/omniccli/public_html/static/"
+STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
 
 
 # Media files
-MEDIA_URL = "media/"
+
+
 if DEBUG:
+    MEDIA_URL = "media/"
     MEDIA_ROOT = BASE_DIR / "media"
 else:
-    MEDIA_ROOT = "/home/omniccli/public_html/media/"
-# Default primary key field type
+    MEDIA_URL = f"{AWS_S3_ENDPOINT_URL}/{AWS_STORAGE_BUCKET_NAME}/media/"
+
+# # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
