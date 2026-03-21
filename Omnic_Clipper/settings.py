@@ -110,6 +110,12 @@ WSGI_APPLICATION = "Omnic_Clipper.wsgi.application"
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
 if not DEBUG:
+    # Neon requires SSL. On hosts without IPv6 egress (e.g. some PaaS), DNS may resolve
+    # Neon to IPv6 only — set DB_HOSTADDR to the IPv4 from Neon dashboard or `nslookup -type=A your.neon.host`.
+    _pg_options = {"sslmode": "require"}
+    _hostaddr = os.getenv("DB_HOSTADDR", "").strip()
+    if _hostaddr:
+        _pg_options["hostaddr"] = _hostaddr
 
     DATABASES = {
         "default": {
@@ -119,11 +125,7 @@ if not DEBUG:
             "PASSWORD": os.getenv("DB_PASSWORD"),
             "HOST": os.getenv("DB_HOST"),
             "PORT": str(os.getenv("DB_PORT")),
-            # Pass through libpq connection options from the URL.
-            # "OPTIONS": {
-            #     "sslmode": "require",
-            #     "channel_binding": "require",
-            # },
+            "OPTIONS": _pg_options,
         }
     }
 else:
