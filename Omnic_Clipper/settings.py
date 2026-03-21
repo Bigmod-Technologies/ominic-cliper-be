@@ -9,13 +9,6 @@ from dotenv import load_dotenv
 BASE_DIR = Path(__file__).resolve().parent.parent
 load_dotenv(dotenv_path=BASE_DIR / ".env")
 
-def env_bool(key: str, default: bool = True) -> bool:
-    """Parse environment variable as boolean."""
-    val = os.getenv(key)
-    if val is None:
-        return default
-    return False if val.strip().lower() == "False" else True
-
 
 def normalize_s3_endpoint_url(url: str | None) -> str | None:
     """Boto3 requires a full URL with scheme; allow host-only values from .env."""
@@ -29,7 +22,7 @@ def normalize_s3_endpoint_url(url: str | None) -> str | None:
     return url.rstrip("/")
 
 SECRET_KEY = os.getenv("SECRET_KEY", "unsafe-dev-key")
-DEBUG = env_bool("DEBUG", True)
+DEBUG = False if os.getenv("DEBUG") == "False" else True
 ALLOWED_HOSTS = os.getenv("ALLOWED_HOSTS", "*").split(",")
 
 # -----------------------
@@ -167,16 +160,16 @@ USE_TZ = True
 # -----------------------
 # STATIC & MEDIA FILES
 # -----------------------
-STATIC_ROOT = BASE_DIR / "staticfiles"
+
 if not DEBUG:
-    # iDrive E2 (S3-compatible) when developing with DEBUG=False
+    # iDrive E2 (S3-compatible) when production and DEBUG=False
     AWS_ACCESS_KEY_ID = os.getenv("AWS_ACCESS_KEY_ID")
     AWS_SECRET_ACCESS_KEY = os.getenv("AWS_SECRET_ACCESS_KEY")
     AWS_STORAGE_BUCKET_NAME = os.getenv("AWS_STORAGE_BUCKET_NAME")
     AWS_S3_ENDPOINT_URL = normalize_s3_endpoint_url(os.getenv("AWS_S3_ENDPOINT_URL"))
     AWS_S3_REGION_NAME = os.getenv("AWS_S3_REGION_NAME", "us-west-1")
     AWS_DEFAULT_ACL = None
-    AWS_QUERYSTRING_AUTH = env_bool("AWS_QUERYSTRING_AUTH", False)
+    AWS_QUERYSTRING_AUTH = True
     AWS_S3_FILE_OVERWRITE = False
     AWS_S3_CUSTOM_DOMAIN = os.getenv("AWS_S3_CUSTOM_DOMAIN")
 
@@ -189,24 +182,17 @@ if not DEBUG:
             "OPTIONS": {"location": AWS_LOCATION_MEDIA},
         },
         "staticfiles": {
-            "BACKEND": "storages.backends.s3boto3.S3StaticStorage",
+            "BACKEND": "storages.backends.s3boto3.S3Boto3Storage",
             "OPTIONS": {"location": AWS_LOCATION_STATIC},
         },
     }
 
-    if AWS_S3_CUSTOM_DOMAIN:
-        STATIC_URL = f"https://{AWS_S3_CUSTOM_DOMAIN.rstrip('/')}/{AWS_LOCATION_STATIC}/"
-        MEDIA_URL = f"https://{AWS_S3_CUSTOM_DOMAIN.rstrip('/')}/{AWS_LOCATION_MEDIA}/"
-    elif AWS_S3_ENDPOINT_URL and AWS_STORAGE_BUCKET_NAME:
-        base = AWS_S3_ENDPOINT_URL.rstrip("/")
-        STATIC_URL = f"{base}/{AWS_STORAGE_BUCKET_NAME}/{AWS_LOCATION_STATIC}/"
-        MEDIA_URL = f"{base}/{AWS_STORAGE_BUCKET_NAME}/{AWS_LOCATION_MEDIA}/"
-    else:
-        STATIC_URL = "/static/"
-        MEDIA_URL = "/media/"
+    STATIC_URL = "/static/"
+    MEDIA_URL = "/media/"
     STATICFILES_DIRS = [BASE_DIR / "static"]
 else:
-    # Local disk (production / DEBUG=True)
+    # Local disk (developing  / DEBUG=True)
+    STATIC_ROOT = BASE_DIR / "staticfiles"
     STORAGES = {
         "default": {"BACKEND": "django.core.files.storage.FileSystemStorage"},
         "staticfiles": {"BACKEND": "django.contrib.staticfiles.storage.StaticFilesStorage"},
