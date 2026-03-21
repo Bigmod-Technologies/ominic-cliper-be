@@ -1,68 +1,62 @@
-from pathlib import Path
 import os
+from pathlib import Path
 from datetime import timedelta
-from urllib.parse import parse_qs, urlparse
-
-# Build paths inside the project like this: BASE_DIR / 'subdir'.
-BASE_DIR = Path(__file__).resolve().parent.parent
-
-
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
-
-# SECURITY WARNING: keep the secret key used in production secret!
-
-
 from dotenv import load_dotenv
 
+# -----------------------
+# BASE SETUP
+# -----------------------
+BASE_DIR = Path(__file__).resolve().parent.parent
 load_dotenv(dotenv_path=BASE_DIR / ".env")
 
-
-def env_bool(key: str, default: bool = False) -> bool:
-    """
-    Read a boolean from environment variables.
-
-    Treats common truthy strings as True; everything else falls back to False/default.
-    """
+def env_bool(key: str, default: bool = True) -> bool:
+    """Parse environment variable as boolean."""
     val = os.getenv(key)
     if val is None:
         return default
-    return val.strip().lower() in ("1", "true", "yes", "y", "on")
+    return False if val.strip().lower() == "False" else True
 
 
-SECRET_KEY = os.getenv("SECRET_KEY", "")
+def normalize_s3_endpoint_url(url: str | None) -> str | None:
+    """Boto3 requires a full URL with scheme; allow host-only values from .env."""
+    if not url:
+        return None
+    url = url.strip()
+    if not url:
+        return None
+    if "://" not in url:
+        url = f"https://{url.lstrip('/')}"
+    return url.rstrip("/")
 
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False if os.getenv("DEBUG") == "False" else True
+SECRET_KEY = os.getenv("SECRET_KEY", "unsafe-dev-key")
+DEBUG = env_bool("DEBUG", True)
+ALLOWED_HOSTS = os.getenv("ALLOWED_HOSTS", "*").split(",")
 
-ALLOWED_HOSTS = ["*"]
-
-
-# Application definition
-
+# -----------------------
+# APPLICATIONS
+# -----------------------
 INSTALLED_APPS = [
+    # Django core
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    # drf
+    # DRF & auth
     "rest_framework",
     "django_filters",
-    # auth
     "rest_framework.authtoken",
     "dj_rest_auth",
     "corsheaders",
-    # utils
+    # Utilities
     "drf_spectacular",
     "drf_spectacular_sidecar",
     "django_cleanup.apps.CleanupConfig",
     "drf_standardized_errors",
-    # dependencies
+    # Dependencies
     "ckeditor",
     # Custom apps
-    # "apps.webApp",
     "apps.service",
     "apps.blog",
     "apps.testimonial",
@@ -86,7 +80,6 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = "Omnic_Clipper.urls"
 
-
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
@@ -105,18 +98,17 @@ TEMPLATES = [
 
 WSGI_APPLICATION = "Omnic_Clipper.wsgi.application"
 
-
-# Database
-# https://docs.djangoproject.com/en/5.1/ref/settings/#databases
-
-if not DEBUG:
-    # Neon requires SSL. On hosts without IPv6 egress (e.g. some PaaS), DNS may resolve
-    # Neon to IPv6 only — set DB_HOSTADDR to the IPv4 from Neon dashboard or `nslookup -type=A your.neon.host`.
-    _pg_options = {"sslmode": "require"}
-    _hostaddr = os.getenv("DB_HOSTADDR", "").strip()
-    if _hostaddr:
-        _pg_options["hostaddr"] = _hostaddr
-
+# -----------------------
+# DATABASE
+# -----------------------
+if DEBUG:
+    DATABASES = {
+        "default": {
+            "ENGINE": "django.db.backends.sqlite3",
+            "NAME": BASE_DIR / "db.sqlite3",
+        }
+    }
+else:
     DATABASES = {
         "default": {
             "ENGINE": "django.db.backends.postgresql",
@@ -125,148 +117,130 @@ if not DEBUG:
             "PASSWORD": os.getenv("DB_PASSWORD"),
             "HOST": os.getenv("DB_HOST"),
             "PORT": str(os.getenv("DB_PORT")),
-            "OPTIONS": _pg_options,
-        }
-    }
-else:
-    DATABASES = {
-        "default": {
-            "ENGINE": "django.db.backends.sqlite3",
-            "NAME": BASE_DIR / "db.sqlite3",
         }
     }
 
-
-# Password validation
-# https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators
-
+# -----------------------
+# PASSWORD VALIDATION
+# -----------------------
 AUTH_PASSWORD_VALIDATORS = [
-    {
-        "NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator",
-    },
-    {
-        "NAME": "django.contrib.auth.password_validation.MinimumLengthValidator",
-    },
-    {
-        "NAME": "django.contrib.auth.password_validation.CommonPasswordValidator",
-    },
-    {
-        "NAME": "django.contrib.auth.password_validation.NumericPasswordValidator",
-    },
+    {"NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator"},
+    {"NAME": "django.contrib.auth.password_validation.MinimumLengthValidator"},
+    {"NAME": "django.contrib.auth.password_validation.CommonPasswordValidator"},
+    {"NAME": "django.contrib.auth.password_validation.NumericPasswordValidator"},
 ]
 
-
+# -----------------------
+# REST FRAMEWORK & JWT
+# -----------------------
 REST_FRAMEWORK = {
-    "DEFAULT_AUTHENTICATION_CLASSES": (
-        "dj_rest_auth.jwt_auth.JWTCookieAuthentication",
-    ),
+    "DEFAULT_AUTHENTICATION_CLASSES": ("dj_rest_auth.jwt_auth.JWTCookieAuthentication",),
     "DEFAULT_RENDERER_CLASSES": ("rest_framework.renderers.JSONRenderer",),
     "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",
 }
-REST_AUTH = {
-    "USE_JWT": True,
-    "JWT_AUTH_HTTPONLY": False,
-}
 
+REST_AUTH = {"USE_JWT": True, "JWT_AUTH_HTTPONLY": False}
 
-# JWT
 SIMPLE_JWT = {
     "ACCESS_TOKEN_LIFETIME": timedelta(minutes=60),
     "REFRESH_TOKEN_LIFETIME": timedelta(days=365),
     "ROTATE_REFRESH_TOKENS": False,
     "BLACKLIST_AFTER_ROTATION": False,
-    "UPDATE_LAST_LOGIN": False,
     "ALGORITHM": "HS256",
     "SIGNING_KEY": SECRET_KEY,
-    "VERIFYING_KEY": None,
-    "AUDIENCE": None,
-    "ISSUER": None,
-    "JWK_URL": None,
-    "LEEWAY": 0,
     "AUTH_HEADER_TYPES": ("Bearer",),
     "AUTH_HEADER_NAME": "HTTP_AUTHORIZATION",
     "USER_ID_FIELD": "id",
     "USER_ID_CLAIM": "user_id",
-    "USER_AUTHENTICATION_RULE": "rest_framework_simplejwt.authentication.default_user_authentication_rule",
-    "AUTH_TOKEN_CLASSES": ("rest_framework_simplejwt.tokens.AccessToken",),
-    "TOKEN_TYPE_CLAIM": "token_type",
     "TOKEN_USER_CLASS": "rest_framework_simplejwt.models.TokenUser",
-    "JTI_CLAIM": "jti",
-    "SLIDING_TOKEN_REFRESH_EXP_CLAIM": "refresh_exp",
-    "SLIDING_TOKEN_LIFETIME": timedelta(minutes=5),
-    "SLIDING_TOKEN_REFRESH_LIFETIME": timedelta(days=1),
+    "AUTH_TOKEN_CLASSES": ("rest_framework_simplejwt.tokens.AccessToken",),
 }
 
-
-# Internationalization
-# https://docs.djangoproject.com/en/5.1/topics/i18n/
-
+# -----------------------
+# INTERNATIONALIZATION
+# -----------------------
 LANGUAGE_CODE = "en-us"
-
 TIME_ZONE = "Asia/Dhaka"
-
 USE_I18N = True
-
 USE_TZ = True
 
+# -----------------------
+# STATIC & MEDIA FILES
+# -----------------------
+STATIC_ROOT = BASE_DIR / "staticfiles"
+if not DEBUG:
+    # iDrive E2 (S3-compatible) when developing with DEBUG=False
+    AWS_ACCESS_KEY_ID = os.getenv("AWS_ACCESS_KEY_ID")
+    AWS_SECRET_ACCESS_KEY = os.getenv("AWS_SECRET_ACCESS_KEY")
+    AWS_STORAGE_BUCKET_NAME = os.getenv("AWS_STORAGE_BUCKET_NAME")
+    AWS_S3_ENDPOINT_URL = normalize_s3_endpoint_url(os.getenv("AWS_S3_ENDPOINT_URL"))
+    AWS_S3_REGION_NAME = os.getenv("AWS_S3_REGION_NAME", "us-west-1")
+    AWS_DEFAULT_ACL = None
+    AWS_QUERYSTRING_AUTH = env_bool("AWS_QUERYSTRING_AUTH", False)
+    AWS_S3_FILE_OVERWRITE = False
+    AWS_S3_CUSTOM_DOMAIN = os.getenv("AWS_S3_CUSTOM_DOMAIN")
 
-DEFAULT_FILE_STORAGE = "storages.backends.s3boto3.S3Boto3Storage"
+    AWS_LOCATION_STATIC = os.getenv("AWS_LOCATION_STATIC", "static")
+    AWS_LOCATION_MEDIA = os.getenv("AWS_LOCATION_MEDIA", "media")
 
-AWS_ACCESS_KEY_ID = os.getenv("AWS_ACCESS_KEY_ID", "")
-AWS_SECRET_ACCESS_KEY = os.getenv("AWS_SECRET_ACCESS_KEY", "")
+    STORAGES = {
+        "default": {
+            "BACKEND": "storages.backends.s3boto3.S3Boto3Storage",
+            "OPTIONS": {"location": AWS_LOCATION_MEDIA},
+        },
+        "staticfiles": {
+            "BACKEND": "storages.backends.s3boto3.S3StaticStorage",
+            "OPTIONS": {"location": AWS_LOCATION_STATIC},
+        },
+    }
 
-AWS_STORAGE_BUCKET_NAME = os.getenv("AWS_STORAGE_BUCKET_NAME", "")
-
-AWS_S3_ENDPOINT_URL = os.getenv("AWS_S3_ENDPOINT_URL", "")
-AWS_S3_REGION_NAME = os.getenv("AWS_S3_REGION_NAME", "us-west-1")  # your region
-
-AWS_S3_ADDRESSING_STYLE = os.getenv("AWS_S3_ADDRESSING_STYLE", "virtual")
-AWS_S3_SIGNATURE_VERSION = os.getenv("AWS_S3_SIGNATURE_VERSION", "s3v4")
-AWS_QUERYSTRING_AUTH = env_bool("AWS_QUERYSTRING_AUTH", False)  # optional (public URLs)
-
-
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/5.1/howto/static-files/
-STATIC_URL = "static/"
-STATICFILES_DIRS = [BASE_DIR / "static"]
-STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
-
-
-# Media files
-
-
-if DEBUG:
-    MEDIA_URL = "media/"
-    MEDIA_ROOT = BASE_DIR / "media"
+    if AWS_S3_CUSTOM_DOMAIN:
+        STATIC_URL = f"https://{AWS_S3_CUSTOM_DOMAIN.rstrip('/')}/{AWS_LOCATION_STATIC}/"
+        MEDIA_URL = f"https://{AWS_S3_CUSTOM_DOMAIN.rstrip('/')}/{AWS_LOCATION_MEDIA}/"
+    elif AWS_S3_ENDPOINT_URL and AWS_STORAGE_BUCKET_NAME:
+        base = AWS_S3_ENDPOINT_URL.rstrip("/")
+        STATIC_URL = f"{base}/{AWS_STORAGE_BUCKET_NAME}/{AWS_LOCATION_STATIC}/"
+        MEDIA_URL = f"{base}/{AWS_STORAGE_BUCKET_NAME}/{AWS_LOCATION_MEDIA}/"
+    else:
+        STATIC_URL = "/static/"
+        MEDIA_URL = "/media/"
+    STATICFILES_DIRS = [BASE_DIR / "static"]
 else:
-    MEDIA_URL = f"{AWS_S3_ENDPOINT_URL}/{AWS_STORAGE_BUCKET_NAME}/media/"
+    # Local disk (production / DEBUG=True)
+    STORAGES = {
+        "default": {"BACKEND": "django.core.files.storage.FileSystemStorage"},
+        "staticfiles": {"BACKEND": "django.contrib.staticfiles.storage.StaticFilesStorage"},
+    }
+    STATIC_URL = "/static/"
+    STATICFILES_DIRS = [BASE_DIR / "static"]
+    MEDIA_URL = "/media/"
+    MEDIA_ROOT = BASE_DIR / "media"
 
-# # Default primary key field type
-# https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
-
+# -----------------------
+# DEFAULT PRIMARY KEY
+# -----------------------
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
-
+# -----------------------
+# CORS
+# -----------------------
 CORS_ORIGIN_ALLOW_ALL = True
 
+# -----------------------
+# SPECTACULAR / API DOCS
+# -----------------------
 SPECTACULAR_SETTINGS = {
-    "TITLE": "Ominic Clipper | API Documentation",
-    "DESCRIPTION": "documentations vist /doc",
+    "TITLE": "Omnic Clipper | API Documentation",
+    "DESCRIPTION": "Visit /doc for API documentation",
     "VERSION": "0.0.1",
     "SERVE_INCLUDE_SCHEMA": False,
     "SCHEMA_PATH_PREFIX_TRIM": True,
-    # 'SERVE_PUBLIC': False,
-    # 'SERVE_AUTHENTICATION': ['rest_framework.authentication.SessionAuthentication'],
-    # 'SERVE_PERMISSIONS': ['rest_framework.permissions.IsAuthenticated'],
     "CAMELIZE_NAMES": True,
     "POSTPROCESSING_HOOKS": [],
-    # OTHER SETTINGS
     "COMPONENT_SPLIT_REQUEST": True,
-    # shorthand to use the sidecar instead
-    "SWAGGER_UI_DIST": "SIDECAR",  # shorthand to use the sidecar instead
-    "SWAGGER_UI_FAVICON_HREF": "SIDECAR",
-    "REDOC_DIST": "SIDECAR",
+    "SWAGGER_UI_DIST": "SIDECAR",
     "SWAGGER_UI_FAVICON_HREF": "#",
+    "REDOC_DIST": "SIDECAR",
     "SWAGGER_UI_SETTINGS": {
         "deepLinking": True,
         "persistAuthorization": True,
