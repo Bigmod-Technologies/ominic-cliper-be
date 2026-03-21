@@ -17,6 +17,7 @@ from dotenv import load_dotenv
 
 load_dotenv(dotenv_path=BASE_DIR / ".env")
 
+
 def env_bool(key: str, default: bool = False) -> bool:
     """
     Read a boolean from environment variables.
@@ -111,20 +112,20 @@ WSGI_APPLICATION = "Omnic_Clipper.wsgi.application"
 DATABASE_URL = os.getenv("DATABASE_URL")
 
 if DATABASE_URL and not DEBUG:
-    # Example URL:
-    # postgresql://user:pass@host:5432/dbname?sslmode=require&channel_binding=require
-    parsed = urlparse(DATABASE_URL)
-    query = {k: v[0] for k, v in parse_qs(parsed.query).items()}
+
     DATABASES = {
         "default": {
             "ENGINE": "django.db.backends.postgresql",
-            "NAME": parsed.path.lstrip("/") or "",
-            "USER": parsed.username or "",
-            "PASSWORD": parsed.password or "",
-            "HOST": parsed.hostname or "",
-            "PORT": str(parsed.port) if parsed.port else "",
+            "NAME": os.getenv("DB_NAME"),
+            "USER": os.getenv("DB_USER"),
+            "PASSWORD": os.getenv("DB_PASSWORD"),
+            "HOST": os.getenv("DB_HOST"),
+            "PORT": str(os.getenv("DB_PORT")),
             # Pass through libpq connection options from the URL.
-            "OPTIONS": query,
+            # "OPTIONS": {
+            #     "sslmode": "require",
+            #     "channel_binding": "require",
+            # },
         }
     }
 else:
@@ -209,7 +210,7 @@ USE_I18N = True
 USE_TZ = True
 
 
-DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+DEFAULT_FILE_STORAGE = "storages.backends.s3boto3.S3Boto3Storage"
 
 AWS_ACCESS_KEY_ID = os.getenv("AWS_ACCESS_KEY_ID", "")
 AWS_SECRET_ACCESS_KEY = os.getenv("AWS_SECRET_ACCESS_KEY", "")
