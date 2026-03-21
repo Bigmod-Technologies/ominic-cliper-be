@@ -109,9 +109,7 @@ WSGI_APPLICATION = "Omnic_Clipper.wsgi.application"
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
-DATABASE_URL = os.getenv("DATABASE_URL")
-
-if DATABASE_URL and not DEBUG:
+if not DEBUG:
 
     DATABASES = {
         "default": {
