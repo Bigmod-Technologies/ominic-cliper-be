@@ -11,7 +11,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.getenv("SECRET_KEY", "")
+
 
 from dotenv import load_dotenv
 
@@ -27,6 +27,9 @@ def env_bool(key: str, default: bool = False) -> bool:
     if val is None:
         return default
     return val.strip().lower() in ("1", "true", "yes", "y", "on")
+
+
+SECRET_KEY = os.getenv("SECRET_KEY", "")
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False if os.getenv("DEBUG") == "False" else True
