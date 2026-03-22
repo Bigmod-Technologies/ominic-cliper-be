@@ -169,7 +169,7 @@ if not DEBUG:
     AWS_S3_ENDPOINT_URL = normalize_s3_endpoint_url(os.getenv("AWS_S3_ENDPOINT_URL"))
     AWS_S3_REGION_NAME = os.getenv("AWS_S3_REGION_NAME", "us-west-1")
     AWS_DEFAULT_ACL = None
-    AWS_QUERYSTRING_AUTH = True
+    AWS_QUERYSTRING_AUTH = False
     AWS_S3_FILE_OVERWRITE = False
     AWS_S3_CUSTOM_DOMAIN = os.getenv("AWS_S3_CUSTOM_DOMAIN")
 
