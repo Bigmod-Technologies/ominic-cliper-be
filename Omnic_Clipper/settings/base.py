@@ -27,6 +27,8 @@ def normalize_s3_endpoint_url(url: str | None) -> str | None:
 SECRET_KEY = os.getenv("SECRET_KEY", "unsafe-dev-key")
 ALLOWED_HOSTS = os.getenv("ALLOWED_HOSTS").split(",")
 
+CSRF_TRUSTED_ORIGINS = os.getenv("CSRF_TRUSTED_ORIGINS", "").split(",")
+
 # -----------------------
 # APPLICATIONS
 # -----------------------
