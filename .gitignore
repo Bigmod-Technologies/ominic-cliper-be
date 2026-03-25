@@ -129,7 +129,8 @@ env.bak/
 venv.bak/
 node_modules
 media   
-staticfiles
+static/*
+!static/.gitkeep
 
 # Spyder project settings
 .spyderproject
